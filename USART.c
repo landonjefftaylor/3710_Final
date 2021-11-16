@@ -80,12 +80,12 @@ void USART_Write(USART_TypeDef * USARTx, uint8_t *buffer, int nBytes) {
 	for (i = 0; i < nBytes && buffer[i] != '\0'; i++) { // loop through each byte
 		while ((USARTx->ISR & USART_ISR_TXE) == 0); // wait until transmitter empty
 		USARTx->TDR = buffer[i] & 0xFF; // load buffer into transmit register
-		usart_delay();
+		//usart_delay();
 	}
 	while ((USARTx->ISR & USART_ISR_TC) == 0); // wait until transmit complete
 	//USARTx->ICR |= 0x00000020; // set trasnmit complete clear changed from TCCF 
 	USARTx->ISR &= ~USART_ISR_TC;
-	usart_delay();
+	//usart_delay();
 }
 
 /*void getTemp(){

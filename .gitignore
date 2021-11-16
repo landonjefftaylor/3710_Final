@@ -1,2 +1,15 @@
 
 *.dbgconf
+*.lando
+*.uvoptx
+*.map
+*.d
+*.o
+Objects/ExtDll.iex
+Objects/final_Target 1.dep
+Objects/lab4.axf
+Objects/lab4.build_log.htm
+Objects/lab4.htm
+Objects/lab4.lnp
+Objects/lab4.sct
+*.uvoptx
