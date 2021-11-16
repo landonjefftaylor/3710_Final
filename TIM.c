@@ -1,11 +1,6 @@
 #include "TIM.h"
 #include "stm32l476xx.h"
 
-/*volatile unsigned int time;
-void Set_Time_Zero(void) {
-	time = 0;
-}*/
-
 volatile unsigned int timer;
 volatile unsigned int state;
 volatile unsigned int step;
