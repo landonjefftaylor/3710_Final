@@ -10,7 +10,8 @@ void set_timer(unsigned int s);
 void buzz_delay(void);
 
 void wind_delay(void);
-void wind(unsigned int secs);
+void reward_time(unsigned int secs);
+void penalty_time(unsigned int secs);
 unsigned int get_timer(void);
 
 /*

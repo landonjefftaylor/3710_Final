@@ -130,7 +130,7 @@ void wind_delay(void) { // debounce and delay
 	}
 }
 
-void wind(unsigned int secs) {
+void reward_time(unsigned int secs) {
 	volatile unsigned int ticks = 68 * (secs);
 	// drive the motor
 	while (ticks) {
@@ -177,3 +177,48 @@ void wind(unsigned int secs) {
 	}
 }
 
+void penalty_time(unsigned int secs) {
+	volatile unsigned int ticks = 68 * (secs);
+	while (ticks) {
+		GPIOB->ODR &= 0xFFFFFFF9; //DA
+		GPIOB->ODR |= 0x00000009; //DA
+		ticks--;
+		wind_delay();
+		if (ticks == 0) break;
+		GPIOB->ODR &= 0xFFFFFFF8; //D
+		GPIOB->ODR |= 0x00000008; //D
+		ticks--;
+		wind_delay();
+		if (ticks == 0) break;
+		GPIOB->ODR &= 0xFFFFFFFC; //CD
+		GPIOB->ODR |= 0x0000000C; //CD
+		ticks--;
+		wind_delay();
+		if (ticks == 0) break;
+		GPIOB->ODR &= 0xFFFFFFF4; //C
+		GPIOB->ODR |= 0x00000004; //C
+		ticks--;
+		wind_delay();
+		if (ticks == 0) break;
+		GPIOB->ODR &= 0xFFFFFFF6; //BC
+		GPIOB->ODR |= 0x00000006; //BC
+		ticks--;
+		wind_delay();
+		if (ticks == 0) break;
+		GPIOB->ODR &= 0xFFFFFFF2; //B
+		GPIOB->ODR |= 0x00000002; //B
+		ticks--;
+		wind_delay();
+		if (ticks == 0) break;
+		GPIOB->ODR &= 0xFFFFFFF3; //AB
+		GPIOB->ODR |= 0x00000003; //AB
+		ticks--;
+		wind_delay();
+		if (ticks == 0) break;		
+		GPIOB->ODR &= 0xFFFFFFF1; //A
+		GPIOB->ODR |= 0x00000001; //A
+		ticks--;
+		wind_delay();
+		if (ticks == 0) break;
+	}
+}
