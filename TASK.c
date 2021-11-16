@@ -14,7 +14,7 @@ uint8_t** inputs = {
 Randomly pick two tasks, one in task[0] and one in task[1]
 Send task[] to the slave module
 Send task[0] to COM (slave will send task[1] to COM)
-Wait for ok[] to come back
+Wait for ok[] to come back or the timer to run out
 If ok[0] or ok[1] is 'n':
 	Give a task-appropriate penalty
 	Update either one or both tasks
@@ -26,8 +26,7 @@ If ok[1] is 'y'
 	Give a task-appropriate reward
 	Update task[1] to a new random task
 	Send task['\0', new_task] to slave module
-Else:
-	
+
 
 */
 

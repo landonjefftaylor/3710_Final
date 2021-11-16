@@ -428,6 +428,16 @@
               <FileType>5</FileType>
               <FilePath>.\TIM.h</FilePath>
             </File>
+            <File>
+              <FileName>TASK.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\TASK.h</FilePath>
+            </File>
+            <File>
+              <FileName>TASK.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\TASK.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
