@@ -83,7 +83,7 @@ void USART3_Init(void) {
 	RCC->CCIPR &= ~(RCC_CCIPR_USART3SEL); // use system clock
 	RCC->CCIPR |=  (RCC_CCIPR_USART3SEL_0); // use system clock
 	
-	USART_Init(USART1);
+	USART_Init(USART3);
 }
 
 void USART_Read(USART_TypeDef * USARTx, uint8_t *buffer, int nBytes) {
@@ -106,11 +106,11 @@ void USART_Write(USART_TypeDef * USARTx, uint8_t *buffer, int nBytes) {
 	for (i = 0; i < nBytes && buffer[i] != '\0'; i++) { // loop through each byte
 		while ((USARTx->ISR & USART_ISR_TXE) == 0); // wait until transmitter empty
 		USARTx->TDR = buffer[i] & 0xFF; // load buffer into transmit register
-		usart_delay();
+		//usart_delay();
 	}
 	while ((USARTx->ISR & USART_ISR_TC) == 0); // wait until transmit complete
 	//USARTx->ICR |= 0x00000020; // set trasnmit complete clear changed from TCCF 
 	USARTx->ISR &= ~USART_ISR_TC;
-	usart_delay();
+	//usart_delay();
 }
 
