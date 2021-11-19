@@ -83,7 +83,7 @@ void USART3_Init(void) {
 	RCC->CCIPR &= ~(RCC_CCIPR_USART3SEL); // use system clock
 	RCC->CCIPR |=  (RCC_CCIPR_USART3SEL_0); // use system clock
 	
-	USART_Init(USART1);
+	USART_Init(USART3);
 }
 
 void USART_Read(USART_TypeDef * USARTx, uint8_t *buffer, int nBytes) {
