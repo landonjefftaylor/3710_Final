@@ -7,17 +7,34 @@ int main(void){
 	USART3_Init();
 	ADC1_Init();
 	
-	uint8_t buffer[2];
+	uint8_t buffer[20];
+	//USART_Write(USART2, (uint8_t*) "hi there ", 50); 
 	
-	while(1) {
-		USART_Read(USART2, buffer, 1);
-		if (buffer[0] == 't' || buffer[0] == 'T') {
+	usart_delay();
+	USART_Write(USART3, (uint8_t*) "aaaaaaaaaaaa", 12);
+	usart_delay();
+	USART_Write(USART3, (uint8_t*) "bbbbbbbbbbbb", 12);
+	usart_delay();
+	USART_Write(USART3, (uint8_t*) "cccccccccccc", 12);
+	usart_delay();
+	USART_Write(USART3, (uint8_t*) "dddddddddddd", 12);
+	usart_delay();
+	USART_Write(USART3, (uint8_t*) "eeeeeeeeeeee", 12);
+	
+	while (1) {
+		//USART_Read(USART3, buffer, 12);
+		usart_delay();
+		USART_Write(USART3, (uint8_t*) "Hello uart\n", 12);
+	}
+
+		
+		/*if (buffer[0] == 't' || buffer[0] == 'T') {
 			float temp = Get_Temp();
 			
 			char tempstr[80];
 			sprintf(tempstr, "temp is %f degrees. ", temp);
 			
-			/*unsigned char ones = (unsigned char) (temp % 10 + 0x30);
+			unsigned char ones = (unsigned char) (temp % 10 + 0x30);
 			temp /= 10;
 			unsigned char tens = (unsigned char) (temp % 10 + 0x30);
 			temp /= 10;
@@ -33,14 +50,10 @@ int main(void){
 			tempstr[2] = hnds;
 			tempstr[3] = tens;
 			tempstr[4] = ones;
-			tempstr[5] = '\n';*/
+			tempstr[5] = '\n';
 			
-			USART_Write(USART2, (uint8_t*) tempstr, 50);
-		}
-	}
-	
-	
-	
+			USART_Write(USART2, (uint8_t*) tempstr, 50); 
+		}*/	
 	while(1);
 	
 	/*while (1) {

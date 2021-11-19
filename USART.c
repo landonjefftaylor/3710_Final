@@ -15,6 +15,8 @@ void USART_Init(USART_TypeDef * USARTx) {
 	USARTx->CR1 |= USART_CR1_UE; // turn on the usart
 	while ((USARTx->ISR & USART_ISR_TEACK) == 0); // wait until usart is ready to transmit
 	while ((USARTx->ISR & USART_ISR_REACK) == 0); // wait until usart is ready to recieve
+	int i;
+	i = 0;
 }
 
 void System_Clock_Init(void) {
@@ -71,7 +73,7 @@ void USART3_Init(void) {
 	GPIOC->MODER &= 0xFFAFFFFF; // pins 10 and 11 in AF mode
 	GPIOC->MODER |= 0x00A00000;
 	
-	GPIOC->AFR[0] |= 0x77 << (4*10); // pins 10 and 11 to AF7 or UART2 tx and rx
+	GPIOC->AFR[1] |= 0x77 << (4*2); // pins 10 and 11 to AF7 or UART2 tx and rx
 	
 	GPIOC->OSPEEDR |= 0xF<<(2*10); // pins 10 and 11 in high speed 11 mode
 	
@@ -92,6 +94,7 @@ void USART_Read(USART_TypeDef * USARTx, uint8_t *buffer, int nBytes) {
 	for (i = 0; i < nBytes; i++) { // loop through each byte
 		while (!(USARTx->ISR & USART_ISR_RXNE)); // wait until reciever not empty
 		buffer[i] = USARTx->RDR; // read into buffer clear rxne
+		if (buffer[i] == '\0') break;
 	}
 }
 
