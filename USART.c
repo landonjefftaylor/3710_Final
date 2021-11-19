@@ -15,8 +15,6 @@ void USART_Init(USART_TypeDef * USARTx) {
 	USARTx->CR1 |= USART_CR1_UE; // turn on the usart
 	while ((USARTx->ISR & USART_ISR_TEACK) == 0); // wait until usart is ready to transmit
 	while ((USARTx->ISR & USART_ISR_REACK) == 0); // wait until usart is ready to recieve
-	int i;
-	i = 0;
 }
 
 void System_Clock_Init(void) {
@@ -54,8 +52,6 @@ void USART2_Init(void) {
 	GPIOA->PUPDR &= ~(0xF<<(2*2));
 	GPIOA->PUPDR |= 0x5 << (2*2); // pin 2 3 in pull-up mode
 	
-	//GPIOB->OTYPER &= 0xFFFFFFF3; // pin 2 3 in push pull mode
-	
 	RCC->CCIPR &= ~(RCC_CCIPR_USART2SEL); // use system clock
 	RCC->CCIPR |=  (RCC_CCIPR_USART2SEL_0); // use system clock
 	
@@ -80,8 +76,6 @@ void USART3_Init(void) {
 	GPIOC->PUPDR &= ~(0xF<<(2*10));
 	GPIOC->PUPDR |= 0x5 << (2*10); // pin 10 11 in pull-up mode
 	
-	//GPIOC->OTYPER &= 0xFFFFFFF3; // pC 10 and 11 in push pull mode
-	
 	RCC->CCIPR &= ~(RCC_CCIPR_USART3SEL); // use system clock
 	RCC->CCIPR |=  (RCC_CCIPR_USART3SEL_0); // use system clock
 	
@@ -94,7 +88,6 @@ void USART_Read(USART_TypeDef * USARTx, uint8_t *buffer, int nBytes) {
 	for (i = 0; i < nBytes; i++) { // loop through each byte
 		while (!(USARTx->ISR & USART_ISR_RXNE)); // wait until reciever not empty
 		buffer[i] = USARTx->RDR; // read into buffer clear rxne
-		if (buffer[i] == '\0') break;
 	}
 }
 
@@ -116,4 +109,3 @@ void USART_Write(USART_TypeDef * USARTx, uint8_t *buffer, int nBytes) {
 	USARTx->ISR &= ~USART_ISR_TC;
 	//usart_delay();
 }
-
