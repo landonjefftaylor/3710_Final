@@ -96,6 +96,7 @@ void USART_Read(USART_TypeDef * USARTx, uint8_t *buffer, int nBytes) {
 		buffer[i] = USARTx->RDR; // read into buffer clear rxne
 		if (buffer[i] == '\0') break;
 	}
+	usart_delay();
 }
 
 void usart_delay(void) {
@@ -105,6 +106,7 @@ void usart_delay(void) {
 
 void USART_Write(USART_TypeDef * USARTx, uint8_t *buffer, int nBytes) {
 	//page 536
+	usart_delay();
 	int i;
 	for (i = 0; i < nBytes && buffer[i] != '\0'; i++) { // loop through each byte
 		while ((USARTx->ISR & USART_ISR_TXE) == 0); // wait until transmitter empty
