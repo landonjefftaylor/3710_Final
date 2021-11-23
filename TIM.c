@@ -5,6 +5,8 @@ volatile unsigned int timer;
 volatile unsigned int state;
 volatile unsigned int step;
 
+volatile unsigned int rand;
+
 void set_state(unsigned int s) {
 	state = s;
 }
@@ -17,11 +19,16 @@ unsigned int get_timer(void) {
 	return timer;
 }
 
+unsigned int get_rand(unsigned int wall) {
+	return rand % wall;
+}
+
 void Timer_Init(void) {
 	
 	state = 0;
 	timer = 0;
 	step = 0;
+	rand = 0;
 	
 	//Set_Time_Zero();
 	
@@ -53,6 +60,7 @@ void Timer_Init(void) {
 
 void SysTick_Handler(void) {
 	// drive the motor
+	rand++;
 	if (timer) {
 		switch (step) {
 			case 7: 

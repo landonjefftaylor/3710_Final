@@ -117,3 +117,12 @@ void USART_Write(USART_TypeDef * USARTx, uint8_t *buffer, int nBytes) {
 	//usart_delay();
 }
 
+void USART_Clear(USART_TypeDef * USARTx) {
+	uint8_t command[1];
+	command[0] = 27;
+	
+	USART_Write(USARTx, command, 1);
+	USART_Write(USARTx, (uint8_t*) "[2J", 20);
+	USART_Write(USARTx, command, 1);
+	USART_Write(USARTx, (uint8_t*) "[H", 20);
+}

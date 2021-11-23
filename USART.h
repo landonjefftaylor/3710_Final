@@ -9,4 +9,5 @@ void USART_Read(USART_TypeDef * USARTx, uint8_t *buffer, int nBytes);
 void USART_Write(USART_TypeDef * USARTx, uint8_t *buffer, int nBytes);
 void usart_delay(void);
 void System_Clock_Init(void);
+void USART_Clear(USART_TypeDef * USARTx);
 #endif

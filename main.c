@@ -7,9 +7,38 @@ int main(void){
 	USART3_Init();
 	ADC1_Init();
 	
-	uint8_t buffer[20];
+	//uint8_t buffer[20];
 	//USART_Write(USART2, (uint8_t*) "hi there ", 50); 
 	
+	USART_Write(USART3, (uint8_t*) "hi there ", 50);
+	
+	/*
+	
+	USART_Clear(USART2);
+	
+	USART_Write(USART2, (uint8_t*) "WELCOME TO SPACE THINGY\r\n", 80);
+	USART_Write(USART2, (uint8_t*) "***********************\r\n", 80);
+	USART_Write(USART2, (uint8_t*) "ENTER YOUR GAME NUMBER:\r\n\n", 80);
+	
+	uint8_t game_id[1];
+	USART_Read(USART2, game_id, 1);
+	
+	USART_Clear(USART2);
+	
+	//USART_Write(USART2, command, 1);
+	//USART_Write(USART2, (uint8_t*) "[2J", 20);
+	//USART_Write(USART2, command, 1);
+	//USART_Write(USART2, (uint8_t*) "[H", 20);
+	
+	USART_Write(USART2, (uint8_t*) "PRESS ANY KEY TO START.\r\n", 80);
+	
+	USART_Read(USART2, buffer, 1);
+	USART_Clear(USART2);
+	
+	USART_Write(USART2, (uint8_t*) "GAME WILL COMMENCE NOW.\r\n", 80);
+	*/
+	
+	/*
 	usart_delay();
 	USART_Write(USART3, (uint8_t*) "aaaaaaaaaaaa", 12);
 	usart_delay();
@@ -25,7 +54,7 @@ int main(void){
 		//USART_Read(USART3, buffer, 12);
 		usart_delay();
 		USART_Write(USART3, (uint8_t*) "Hello uart\n", 12);
-	}
+	}*/
 
 		
 		/*if (buffer[0] == 't' || buffer[0] == 'T') {

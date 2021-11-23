@@ -14,6 +14,8 @@ void reward_time(unsigned int secs);
 void penalty_time(unsigned int secs);
 unsigned int get_timer(void);
 
+unsigned int get_rand(unsigned int wall);
+
 /*
 int state;
 int step;
