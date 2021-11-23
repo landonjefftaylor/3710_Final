@@ -3,11 +3,11 @@
 //#include "ADC.h"
 
 int main(void){
+	uint8_t nbuffer[BUFFER_SIZE];
 	USART2_Init();
 	USART3_Init();
+	copy_buff(nbuffer);
 	//ADC1_Init();
-	
-	uint8_t buffer[20];
 	
 	/*while(1) {
 		USART_Read(USART2, buffer, 1);
@@ -24,8 +24,8 @@ int main(void){
 	
 	
 	while(1){ // Only reading/sending one at a time to the console
-		USART_Read(USART3, buffer, 12);
-		USART_Write(USART2, buffer, 12);
+		// Should read to the buffer automagically
+		USART_PWrite(USART2, nbuffer, 12);
 		usart_delay();
 	}
 }

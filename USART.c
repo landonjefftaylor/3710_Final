@@ -1,20 +1,10 @@
 #include "stm32l476xx.h"
 #include "USART.h"
+static volatile uint32_t Rx3_Counter = 0;
+static uint8_t ubuffer[BUFFER_SIZE];
 
-//uint32_t temp;
-
-void USART_Init(USART_TypeDef * USARTx) {
-	// from page 534
-	USARTx->CR1 &= ~USART_CR1_UE; // turn off the usart to change settings
-	USARTx->CR1 &= ~USART_CR1_M; // set data length to 8 bits 00
-	USARTx->CR2 &= ~USART_CR2_STOP; // one stop bit
-	USARTx->CR1 &= ~USART_CR1_PCE; // no parity
-	USARTx->CR1 &= ~USART_CR1_OVER8; // oversample by 16
-	USARTx->BRR = 0x683; // baud rate 9600, ex1 in sec 22.1.2
-	USARTx->CR1 |= (USART_CR1_TE | USART_CR1_RE); // enable transmit and recv
-	USARTx->CR1 |= USART_CR1_UE; // turn on the usart
-	while ((USARTx->ISR & USART_ISR_TEACK) == 0); // wait until usart is ready to transmit
-	while ((USARTx->ISR & USART_ISR_REACK) == 0); // wait until usart is ready to recieve
+void copy_buff(uint8_t *nbuffer){
+	nbuffer = ubuffer;
 }
 
 void System_Clock_Init(void) {
@@ -33,6 +23,19 @@ void System_Clock_Init(void) {
   while ((RCC->CFGR & (uint32_t)RCC_CFGR_SWS) == 0 );
 }
 
+void USART_Init(USART_TypeDef * USARTx) {
+	// from page 534
+	USARTx->CR1 &= ~USART_CR1_UE; // turn off the usart to change settings
+	USARTx->CR1 &= ~USART_CR1_M; // set data length to 8 bits 00
+	USARTx->CR2 &= ~USART_CR2_STOP; // one stop bit
+	USARTx->CR1 &= ~USART_CR1_PCE; // no parity
+	USARTx->CR1 &= ~USART_CR1_OVER8; // oversample by 16
+	USARTx->BRR = 0x683; // baud rate 9600, ex1 in sec 22.1.2
+	USARTx->CR1 |= (USART_CR1_TE | USART_CR1_RE); // enable transmit and recv
+	USARTx->CR1 |= USART_CR1_UE; // turn on the usart
+	while ((USARTx->ISR & USART_ISR_TEACK) == 0); // wait until usart is ready to transmit
+	while ((USARTx->ISR & USART_ISR_REACK) == 0); // wait until usart is ready to recieve
+}
 
 void USART2_Init(void) {
 	// set the clock to HSI clock at 16 MHz
@@ -79,11 +82,27 @@ void USART3_Init(void) {
 	RCC->CCIPR &= ~(RCC_CCIPR_USART3SEL); // use system clock
 	RCC->CCIPR |=  (RCC_CCIPR_USART3SEL_0); // use system clock
 	
+	// Enable interrupt receiving
+	USART3->CR1 |= USART_CR1_RXNEIE;
+	//USART3->CR1 &= ~USART_CR1_TXEIE;
+	NVIC_SetPriority(USART3_IRQn, 0);
+	NVIC_EnableIRQ(USART3_IRQn);
+	
 	USART_Init(USART3);
 }
 
-void USART_Read(USART_TypeDef * USARTx, uint8_t *buffer, int nBytes) {
-	//page 536
+void USART_IRead(USART_TypeDef *USARTx, uint8_t *buffer, uint32_t *pCounter){
+	if(USARTx->ISR & USART_ISR_RXNE){
+		buffer[*pCounter] = USARTx->RDR;
+		(*pCounter)++;
+		if((*pCounter) >= BUFFER_SIZE){
+			(*pCounter) = 0;
+		}
+	}
+}
+
+void USART_PRead(USART_TypeDef * USARTx, uint8_t *buffer, int nBytes) {
+	//page 536, poll read
 	volatile int i; 
 	for (i = 0; i < nBytes; i++) { // loop through each byte
 		while (!(USARTx->ISR & USART_ISR_RXNE)); // wait until reciever not empty
@@ -91,13 +110,8 @@ void USART_Read(USART_TypeDef * USARTx, uint8_t *buffer, int nBytes) {
 	}
 }
 
-void usart_delay(void) {
-	volatile int i = 0;
-	for (i = 0; i < 100000; i++);
-}
-
-void USART_Write(USART_TypeDef * USARTx, uint8_t *buffer, int nBytes) {
-	//page 536
+void USART_PWrite(USART_TypeDef * USARTx, uint8_t *buffer, int nBytes) {
+	//page 536, poll write
 	int i;
 	for (i = 0; i < nBytes && buffer[i] != '\0'; i++) { // loop through each byte
 		while ((USARTx->ISR & USART_ISR_TXE) == 0); // wait until transmitter empty
@@ -108,4 +122,13 @@ void USART_Write(USART_TypeDef * USARTx, uint8_t *buffer, int nBytes) {
 	//USARTx->ICR |= 0x00000020; // set trasnmit complete clear changed from TCCF 
 	USARTx->ISR &= ~USART_ISR_TC;
 	//usart_delay();
+}
+
+void UART3_IRQHandler(void){
+	USART_IRead(USART3, ubuffer, &Rx3_Counter);
+}
+
+void usart_delay(void) {
+	volatile int i = 0;
+	for (i = 0; i < 100000; i++);
 }
