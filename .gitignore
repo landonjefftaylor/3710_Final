@@ -1,2 +1,12 @@
 
 *.dbgconf
+*.lando
+*.map
+*.d
+*.o
+*.iex
+*.dep
+*.axf
+*.htm
+*.lnp
+*.sct
