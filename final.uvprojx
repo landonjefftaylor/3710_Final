@@ -16,7 +16,7 @@
         <TargetCommonOption>
           <Device>STM32L476RGTx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32L4xx_DFP.2.6.1</PackID>
+          <PackID>Keil.STM32L4xx_DFP.2.6.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00018000) IRAM2(0x10000000,0x00008000) IROM(0x08000000,0x00100000) CPUTYPE("Cortex-M4") FPU2 DSP CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>C:\Keil_v5\ARM\PACK\CMSIS\Include</IncludePath>
+              <IncludePath>C:\Keil_v5\ARM\PACK\CMSIS\Include;..\3710_Final-main;.\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -417,26 +417,6 @@
               <FileName>ADC.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\ADC.c</FilePath>
-            </File>
-            <File>
-              <FileName>TIM.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\TIM.c</FilePath>
-            </File>
-            <File>
-              <FileName>TIM.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\TIM.h</FilePath>
-            </File>
-            <File>
-              <FileName>TASK.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\TASK.h</FilePath>
-            </File>
-            <File>
-              <FileName>TASK.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\TASK.c</FilePath>
             </File>
           </Files>
         </Group>
