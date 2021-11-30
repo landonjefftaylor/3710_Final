@@ -1,6 +1,5 @@
 
 *.dbgconf
-*.lando
 *.map
 *.d
 *.o
