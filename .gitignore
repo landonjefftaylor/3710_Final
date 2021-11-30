@@ -29,3 +29,8 @@ master/core_sc000.h
 master/core_sc300.h
 master/final.uvguix.A02306606
 master/final.uvprojx
+master/final.uvguix.A02306606
+master/core_cmInstr.h
+master/core_cmFunc.h
+master/core_cm4.h
+master/cmsis_armcc_V6.h
