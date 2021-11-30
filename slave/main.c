@@ -9,8 +9,10 @@ int main(void){
 	
 	uint8_t buffer[1];
 	//USART_Write(USART2, (uint8_t*) "hi there ", 50); 
-	
+	usart_delay();
 	USART_Read(USART3, buffer, 1);
+	usart_delay();
+	USART_Write(USART2, buffer, 1);
 	
 	/*
 	
