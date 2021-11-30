@@ -113,22 +113,24 @@ void SysTick_Handler(void) {
 	}
 }
 
-void buzz_delay(volatile unsigned int t) { // debounce and delay
+void buzz_delay(void) { // debounce and delay
+	volatile unsigned int t = 160;
 	while (t != 0) {
 		t -= 1;
 	}
 }
 
-// buzzer is on PC4
-// tsec is number of tenths of seconds
-void buzz(volatile double hz, volatile unsigned int tsec) {
-	volatile double del = (4.0f / hz) * 160000;
-	volatile unsigned int t = (160000 * tsec) / del;
+void buzz(void) {
+	volatile unsigned int t = 1600;
 	while (t != 0) {
+		//GPIOC->ODR &= 0xFFFF7FFF;
+		//GPIOC->ODR &= 0xFFFFDFFF;
 		GPIOC->ODR &= 0xFFFFFFEF;
-		buzz_delay(del);
+		buzz_delay();
+		//GPIOC->ODR |= 0x00002000;
+		//GPIOC->ODR |= 0x00008000;
 		GPIOC->ODR |= 0x00000010;
-		buzz_delay(del);
+		buzz_delay();
 		t--;
 	}
 }

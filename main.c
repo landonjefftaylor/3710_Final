@@ -1,59 +1,21 @@
 #include "stm32l476xx.h"
 #include "USART.h"
 #include "ADC.h"
-#include "KEY.h"
-#include "TIM.h"
-
-// Remember pull up voltage for the keypad
 
 int main(void){
 	USART2_Init();
 	USART3_Init();
-	key_init();
-	Timer_Init();
+	uint8_t buffer[3];
+	//ADC1_Init();
 	
-	uint8_t buffer[50] = {0};
-	USART_Clear(USART2);
-	//USART_Write(USART2, (uint8_t*) "init ", 50); 
-	
+	usart_delay();
+	USART_Write(USART3, (uint8_t*) "0a", 3); // note to self: only 2 characters seem to work for now
+	usart_delay();
 	USART_Read(USART3, buffer, 2);
+	usart_delay();
 	USART_Write(USART2, buffer, 2);
-	buffer[0] = 0;
 	
-	while(buffer[0] == 0) {
-		buffer[0] = scan_key();
-	}
-	USART_Write(USART3, buffer, 1);
-	
-	if (buffer[0] == buffer[1]) {
-		USART_Write(USART3, (uint8_t*) "0y", 2);
-	}
-	else {
-		USART_Write(USART3, (uint8_t*) "0n", 2);
-	}
-	buffer[0] = 0; 
-	
-
-
-	buzz(261.63, 5);
-	buzz(293.66, 5);
-	buzz(329.63, 5);
-	buzz(349.23, 5);
-	buzz(392, 5);
-	//buzz(1280);
-	//buzz(900);
-	
-	
-
-	while(1) {
-		USART_Read(USART3, buffer, 2);
-		usart_delay();
-		USART_Write(USART2, buffer, 2);
-		usart_delay();
-		USART_Write(USART3, (uint8_t*) "8a", 2);
-	}
 	/*
-	
 	USART_Clear(USART2);
 	
 	USART_Write(USART2, (uint8_t*) "WELCOME TO SPACE THINGY\r\n", 80);
@@ -65,10 +27,10 @@ int main(void){
 	
 	USART_Clear(USART2);
 	
-	//USART_Write(USART2, command, 1);
-	//USART_Write(USART2, (uint8_t*) "[2J", 20);
-	//USART_Write(USART2, command, 1);
-	//USART_Write(USART2, (uint8_t*) "[H", 20);
+	USART_Write(USART2, command, 1);
+	USART_Write(USART2, (uint8_t*) "[2J", 20);
+	USART_Write(USART2, command, 1);
+	USART_Write(USART2, (uint8_t*) "[H", 20);
 	
 	USART_Write(USART2, (uint8_t*) "PRESS ANY KEY TO START.\r\n", 80);
 	
@@ -127,22 +89,22 @@ int main(void){
 	
 	/*while (1) {
 		USART_Read(USART2, buffer, 1);
-		//usart_delay();
+		usart_delay();
 		USART_Write(USART2, (uint8_t*) buffer, 1);
+	}
+	
+	TS_CAL1 0x 18 04
+	TS_CAL2 0x 1E 05
+	
+	while(1) {
+		
+		USART_Read(USART2, buffer, 8);
+		
+		if (buffer[0] == 'x') {
+			USART_Write(USART2, "hello", 8);
+		}
+		
 	}*/
-	
-	//TS_CAL1 0x 18 04
-	//TS_CAL2 0x 1E 05
-	
-	//while(1) {
-		
-		//USART_Read(USART2, buffer, 8);
-		
-		//if (buffer[0] == 'x') {
-			//USART_Write(USART2, "hello", 8);
-		//}
-		
-	//}
 }
 
 
