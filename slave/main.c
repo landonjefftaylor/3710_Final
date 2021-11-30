@@ -7,10 +7,10 @@ int main(void){
 	USART3_Init();
 	ADC1_Init();
 	
-	//uint8_t buffer[20];
+	uint8_t buffer[1];
 	//USART_Write(USART2, (uint8_t*) "hi there ", 50); 
 	
-	USART_Write(USART3, (uint8_t*) "hi there ", 50);
+	USART_Read(USART3, buffer, 1);
 	
 	/*
 	
