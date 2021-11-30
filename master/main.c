@@ -1,15 +1,15 @@
 #include "stm32l476xx.h"
 #include "USART.h"
 #include "ADC.h"
+#include "TIM.h"
 
 int main(void){
 	USART2_Init();
 	USART3_Init();
-	//ADC1_Init();
+	Timer_Init();
+	uint8_t buffer[3];
 	
-	USART_Write(USART3, (uint8_t*) "h", 50);
-	
-	/*
+	wind(40);
 	
 	USART_Clear(USART2);
 	
@@ -22,18 +22,25 @@ int main(void){
 	
 	USART_Clear(USART2);
 	
-	//USART_Write(USART2, command, 1);
-	//USART_Write(USART2, (uint8_t*) "[2J", 20);
-	//USART_Write(USART2, command, 1);
-	//USART_Write(USART2, (uint8_t*) "[H", 20);
-	
 	USART_Write(USART2, (uint8_t*) "PRESS ANY KEY TO START.\r\n", 80);
 	
 	USART_Read(USART2, buffer, 1);
 	USART_Clear(USART2);
 	
 	USART_Write(USART2, (uint8_t*) "GAME WILL COMMENCE NOW.\r\n", 80);
-	*/
+	
+	set_timer(40);
+	
+	USART_Clear(USART2);
+	usart_delay();
+	USART_Write(USART3, (uint8_t*) "0A", 3); // note to self: only 2 characters seem to work for now
+	usart_delay();
+	USART_Read(USART3, buffer, 3);
+	usart_delay();
+	if(buffer[2] == 'y'){
+		wind(10);
+	}
+	USART_Write(USART2, buffer, 3);
 	
 	/*
 	usart_delay();
@@ -84,22 +91,22 @@ int main(void){
 	
 	/*while (1) {
 		USART_Read(USART2, buffer, 1);
-		//usart_delay();
+		usart_delay();
 		USART_Write(USART2, (uint8_t*) buffer, 1);
+	}
+	
+	TS_CAL1 0x 18 04
+	TS_CAL2 0x 1E 05
+	
+	while(1) {
+		
+		USART_Read(USART2, buffer, 8);
+		
+		if (buffer[0] == 'x') {
+			USART_Write(USART2, "hello", 8);
+		}
+		
 	}*/
-	
-	//TS_CAL1 0x 18 04
-	//TS_CAL2 0x 1E 05
-	
-	//while(1) {
-		
-		//USART_Read(USART2, buffer, 8);
-		
-		//if (buffer[0] == 'x') {
-			//USART_Write(USART2, "hello", 8);
-		//}
-		
-	//}
 }
 
 
