@@ -2,10 +2,10 @@
 #include "KEY.h"
 
 // Array of buttons
-unsigned char keys[4][4] = { {1, 2, 3, 'A'},
-														 {4, 5, 5, 'B'},
-														 {7, 8, 9, 'C'},
-														 {'*', 0, '#', 'D'}
+unsigned char keys[4][4] = { {'1', '2', '3', 'A'},
+														 {'4', '5', '6', 'B'},
+														 {'7', '8', '9', 'C'},
+														 {'*', '0', '#', 'D'}
 														};
 
 // Values to check against rows
@@ -21,17 +21,16 @@ void key_delay(void) { // debounce and delay
 
 // Wait for a column to go low
 unsigned char scan_key(void) {
-	while (1) {
-		GPIOB->ODR &= 0xFFFFFF0F;
-		unsigned int btn1 = GPIOC->IDR & 0x1;
-		unsigned int btn2 = GPIOC->IDR & 0x2;
-		unsigned int btn3 = GPIOC->IDR & 0x4;
-		unsigned int btn4 = GPIOC->IDR & 0x8;
-		unsigned int btns = btn1 && btn2 && btn3 && btn4;
-		if ( !btns ) {
-			return key_detect();
-		}
+	GPIOB->ODR &= 0xFFFFFF0F;
+	unsigned int btn1 = GPIOC->IDR & 0x1;
+	unsigned int btn2 = GPIOC->IDR & 0x2;
+	unsigned int btn3 = GPIOC->IDR & 0x4;
+	unsigned int btn4 = GPIOC->IDR & 0x8;
+	unsigned int btns = btn1 && btn2 && btn3 && btn4;
+	if ( !btns ) {
+		return key_detect();
 	}
+	else return 0;
 }
 
 // Check each column with a specific low row

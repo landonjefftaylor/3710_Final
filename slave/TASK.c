@@ -2,6 +2,8 @@
 #include "TASK.h"
 #include "TIM.h"
 #include "USART.h"
+#include "KEY.h"
+
 /*
 void taskMaster(void) {
 	unsigned int task1 = get_rand(27);
@@ -38,6 +40,9 @@ void taskSlave(void) {
 		USART_Read(USART3, task2_number, 1);
 		USART_Write(USART2, inputs[game_id][task2_number], 100);
 		// need to set up input strings based on game ids
+	}
+	while (1) {
+		scan_key();
 	}
 }
 */
