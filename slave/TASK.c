@@ -40,6 +40,19 @@ void taskSlave(void) {
 		player2_com = buffer[1];
 		USART_Write(USART2, player1[player2_com], 80);
 	}
+	
+	uint8_t check_key = 0;
+	while (check_key == 0) {
+		check_key = scan_key();
+	}
+	if (check_key == buffer[1] + 48) {
+		USART_Write(USART3, (uint8_t*) "$y", 2);
+		USART_Write(USART2, (uint8_t*) "CORRECT KEY! NICELY DONE!", 80);
+	}
+	else {
+		USART_Write(USART3, (uint8_t*) "$n", 2);
+		USART_Write(USART2, (uint8_t*) "INCORRECT KEY! YOU IMBECILE!", 80);
+	}
 }
 
 
