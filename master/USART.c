@@ -101,7 +101,7 @@ void USART_Read(USART_TypeDef * USARTx, uint8_t *buffer, int nBytes) {
 
 void usart_delay(void) {
 	volatile int i = 0;
-	for (i = 0; i < 100000; i++);
+	for (i = 0; i < 1000; i++);
 }
 
 void USART_Write(USART_TypeDef * USARTx, uint8_t *buffer, int nBytes) {

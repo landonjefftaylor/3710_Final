@@ -2,45 +2,51 @@
 #include "TASK.h"
 #include "TIM.h"
 #include "USART.h"
-/*
-void taskMaster(void) {
-	unsigned int task1 = get_rand(27);
-	unsigned int task2 = get_rand(25) + 2;
-	while (1) {
-		uint8_t task2_send[1];
-		task2_send[0] = (uint8_t) task2;
-		USART_Write(USART3, task2_send, 1);
-		while (task2_send[0] != ':') USART_Read(USART3, task2_send, 1); // wait for slave to confirm receipt
-		uint8_t response[2];
-		response[0] = 0; // 0 means no input gotten yet
-		response[1] = 0;
-		USART_Read(USART3, response, 2);
-		if (response[0] == 'n') { // failed action 0
-			// give a penalty
-			task1 = get_rand(27);
-			task2 = get_rand(25) + 2;
-		}
-		if (response[0] == 'y') {
-			// give a reward
-			task1 = get_rand(27);
-		}
-		if (response[1] == 'y') {
-			// give a reward
-			task2 = get_rand(25) + 2;
-		}
-	}
-}
+static uint8_t* player1[16] = {
+	"Press the 0 key",
+	"Press the 1 key",
+	"Press the 2 key",
+	"Press the 3 key",
+	"Press the 4 key",
+	"Press the 5 key",
+	"Press the 6 key",
+	"Press the 7 key",
+	"Press the 8 key",
+	"Press the 9 key",
+	"Press the A key",
+	"Press the B key",
+	"Press the C key",
+	"Press the D key",
+	"Press the # key",
+	"Press the * key",
+};
 
-void taskSlave(void) {
-	uint8_t task2_number[1];
-	while (1) {
-		USART_Clear(USART2); //clear the console
-		USART_Read(USART3, task2_number, 1);
-		USART_Write(USART2, inputs[game_id][task2_number], 100);
-		// need to set up input strings based on game ids
+void taskMaster(void){
+	uint8_t task1 = get_rand(15);
+	uint8_t task2 = get_rand(15);
+	
+	uint8_t buffer[2]; //= {48 + task1, 48 + task2}; // convert random nuymbers to tasks and storre them, in buffer
+	
+	usart_delay();
+	USART_Write(USART3, (uint8_t*) "$0", 2); // Send over the two instructions to scan
+	USART_Read(USART3, buffer, 2);
+	if (buffer[0] != '$'){
+		if(buffer[0] == 'y'){
+			wind(10);
+			USART_Write(USART2, (uint8_t*) "Hooray - we completed the p1 task!\r\n", 80);
+		} else {
+			USART_Write(USART2, (uint8_t*) "You suck balls - not p1 task completed\r\n", 80);
+		}
+	}
+	if (buffer[1] != '$') {
+		if(buffer[1] == 'y'){
+			wind(10);
+			USART_Write(USART2, (uint8_t*) "Hooray - we completed the p2 task!\r\n", 80);
+		} else {
+			USART_Write(USART2, (uint8_t*) "You suck balls - not p2 task completed\r\n", 80);
+		}
 	}
 }
-*/
 
 // READ 27.3 Random Number Genrateor RNG
 
