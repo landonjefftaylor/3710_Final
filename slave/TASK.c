@@ -30,6 +30,7 @@ void taskSlave(void) {
 	uint8_t buffer[2] = {0};
 	
 	USART_Read(USART3, buffer, 2);
+	USART_Write(USART2, buffer, 2);
 	
 	if (buffer[0] != '$') {
 		// set the command for player 1
@@ -38,7 +39,8 @@ void taskSlave(void) {
 	if (buffer[1] != '$') {
 		// set the command for player 2
 		player2_com = buffer[1];
-		USART_Write(USART2, player1[player2_com], 80);
+		USART_Write(USART2, buffer, 2);
+		USART_Write(USART2, player1[player2_com - 48], 80);
 	}
 	
 	uint8_t check_key = 0;
