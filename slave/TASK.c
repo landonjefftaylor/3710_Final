@@ -4,48 +4,44 @@
 #include "USART.h"
 #include "KEY.h"
 
-/*
-void taskMaster(void) {
-	unsigned int task1 = get_rand(27);
-	unsigned int task2 = get_rand(25) + 2;
-	while (1) {
-		uint8_t task2_send[1];
-		task2_send[0] = (uint8_t) task2;
-		USART_Write(USART3, task2_send, 1);
-		while (task2_send[0] != ':') USART_Read(USART3, task2_send, 1); // wait for slave to confirm receipt
-		uint8_t response[2];
-		response[0] = 0; // 0 means no input gotten yet
-		response[1] = 0;
-		USART_Read(USART3, response, 2);
-		if (response[0] == 'n') { // failed action 0
-			// give a penalty
-			task1 = get_rand(27);
-			task2 = get_rand(25) + 2;
-		}
-		if (response[0] == 'y') {
-			// give a reward
-			task1 = get_rand(27);
-		}
-		if (response[1] == 'y') {
-			// give a reward
-			task2 = get_rand(25) + 2;
-		}
+static uint8_t* player1[16] = { 
+	"Press the 0 key",
+	"Press the 1 key",
+	"Press the 2 key",
+	"Press the 3 key",
+	"Press the 4 key",
+	"Press the 5 key",
+	"Press the 6 key",
+	"Press the 7 key",
+	"Press the 8 key",
+	"Press the 9 key",
+	"Press the A key",
+	"Press the B key",
+	"Press the C key",
+	"Press the D key",
+	"Press the # key",
+	"Press the * key"
+};
+
+static uint8_t player1_com = 0;
+static uint8_t player2_com = 0;
+
+void taskSlave(void) {
+	uint8_t buffer[2] = {0};
+	
+	USART_Read(USART3, buffer, 2);
+	
+	if (buffer[0] != '$') {
+		// set the command for player 1
+		player1_com = buffer[0];
+	}
+	if (buffer[1] != '$') {
+		// set the command for player 2
+		player2_com = buffer[1];
+		USART_Write(USART2, player1[player2_com], 80);
 	}
 }
 
-void taskSlave(void) {
-	uint8_t task2_number[1];
-	while (1) {
-		USART_Clear(USART2); //clear the console
-		USART_Read(USART3, task2_number, 1);
-		USART_Write(USART2, inputs[game_id][task2_number], 100);
-		// need to set up input strings based on game ids
-	}
-	while (1) {
-		scan_key();
-	}
-}
-*/
 
 // READ 27.3 Random Number Genrateor RNG
 

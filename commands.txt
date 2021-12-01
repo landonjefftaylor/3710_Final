@@ -1,0 +1,28 @@
+Player 1 has the keypad
+Player 2 has other inputs
+
+================================================================================
+
+Master sends (strings, not digits):
+
+II - game initializing, wait for further instruction
+I_ - game mode _ was selected
+IG - game started, wait for a set of commands
+
+$_ - keep player 1 command, update player 2 command to _
+_$ - keep player 2 command, update player 1 command to _
+__ - update both player commands
+
+ES - End game, wait for score
+(score is sent over as digits, not a string)
+EE - game over, display score
+
+================================================================================
+
+Slave sends (strings, not digits):
+
+II - game initialized, ready for further instruction
+
+$y or $n - player 2 got it right or wrong
+y$ or n$ - player 1 got it right or wrong
+
