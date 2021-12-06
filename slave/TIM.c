@@ -56,14 +56,8 @@ void Timer_Init(void) {
 	GPIOB->MODER &= 0xFFFFFF55; //motor
 	GPIOB->MODER |= 0x00000055;
 	
-	//GPIOC->MODER &= 0x3FFFFFFF; //buzzer
-	//GPIOC->MODER |= 0x40000000;
-	
-	//GPIOC->MODER &= 0xF3FFFFFF; // buzzer on C13
-	//GPIOC->MODER |= 0x04000000;
-	
-	GPIOC->MODER &= 0xFFFFFCFF; // buzzer on C4
-	GPIOC->MODER |= 0x00000100;
+	//GPIOC->MODER &= 0xFFFFFCFF; // buzzer on C4
+	//GPIOC->MODER |= 0x00000100;
 	
 }
 
@@ -122,13 +116,13 @@ void buzz_delay(volatile unsigned int t) { // debounce and delay
 // buzzer is on PC4
 // tsec is number of tenths of seconds
 void buzz(volatile double hz, volatile unsigned int tsec) {
-	volatile double del = (4.0f / hz) * 160000;
-	volatile unsigned int t = (160000 * tsec) / del;
+	volatile double del = ((double)4.0f / hz) * 160000;
+	volatile unsigned int t = (160000 * tsec) / (volatile unsigned int) del;
 	while (t != 0) {
 		GPIOC->ODR &= 0xFFFFFFEF;
-		buzz_delay(del);
+		buzz_delay((volatile unsigned int) del);
 		GPIOC->ODR |= 0x00000010;
-		buzz_delay(del);
+		buzz_delay((volatile unsigned int) del);
 		t--;
 	}
 }

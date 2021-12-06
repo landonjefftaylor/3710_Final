@@ -4,33 +4,59 @@
 #include "USART.h"
 #include "KEY.h"
 
+// Player 1 has the buttons
+// Each button is pulled up with a 2.2k resistor
 static uint8_t* player1[16] = { 
-	"Press the 0 key",
-	"Press the 1 key",
-	"Press the 2 key",
-	"Press the 3 key",
-	"Press the 4 key",
-	"Press the 5 key",
-	"Press the 6 key",
-	"Press the 7 key",
-	"Press the 8 key",
-	"Press the 9 key",
-	"Press the A key",
-	"Press the B key",
-	"Press the C key",
-	"Press the D key",
-	"Press the # key",
-	"Press the * key"
+	"Press the red button", // 0
+	"Press the blue button", // 1
+	"Press the green button", // 2
+	"Press the yellow button", // 3
+	"Press the black button" // 4
+	/*"Flip the switch", // 5
+	"Press the ", // 6
+	"Press the ", // 7
+	"Press the ", // 8
+	"Press the ", // 9
+	"Press the ", // 10
+	"Press the ", // 11
+	"Press the ", // 12
+	"Press the ", // 13 
+	"Press the ", // 14
+	"Press the "  // 15*/
+};
+
+// Player 2 has the keypad
+static uint8_t* player2[16] = { 
+	"Press the 0 key", // 0
+	"Press the 1 key", // 1
+	"Press the 2 key", // 2
+	"Press the 3 key", // 3
+	"Press the 4 key", // 4
+	"Press the 5 key", // 5
+	"Press the 6 key", // 6
+	"Press the 7 key", // 7
+	"Press the 8 key", // 8
+	"Press the 9 key", // 9
+	"Press the A key", // 10
+	"Press the B key", // 11
+	"Press the C key", // 12
+	"Press the D key", // 13 
+	"Press the # key", // 14
+	"Press the * key"  // 15
 };
 
 static uint8_t player1_com = 0;
 static uint8_t player2_com = 0;
+static uint8_t points = 0;
 
+// Task Slave Function
 void taskSlave(void) {
 	uint8_t buffer[2] = {0};
 	
 	USART_Read(USART3, buffer, 2);
-	USART_Write(USART2, buffer, 2);
+	// USART_Write(USART2, buffer, 2); // confirm the command
+	
+	if (buffer[0] == 'X') end_game();
 	
 	if (buffer[0] != '$') {
 		// set the command for player 1
@@ -39,114 +65,126 @@ void taskSlave(void) {
 	if (buffer[1] != '$') {
 		// set the command for player 2
 		player2_com = buffer[1];
+		
+		// write the command to the screen
+		USART_Clear(USART2);
 		USART_Write(USART2, buffer, 2);
-		USART_Write(USART2, player1[player2_com - 48], 80);
+		USART_Write(USART2, player2[player2_com], 80);
 	}
-	
-	uint8_t check_key = 0;
-	while (check_key == 0) {
-		check_key = scan_key();
-	}
-	if (check_key == buffer[1] + 48) {
-		USART_Write(USART3, (uint8_t*) "$y", 2);
-		USART_Write(USART2, (uint8_t*) "CORRECT KEY! NICELY DONE!", 80);
-	}
-	else {
-		USART_Write(USART3, (uint8_t*) "$n", 2);
-		USART_Write(USART2, (uint8_t*) "INCORRECT KEY! YOU IMBECILE!", 80);
-	}
+		
+	while (player1_com < 250 && player2_com < 250) { // Loop until a player has done an input
+		
+		// Scan the keypad once
+		
+		uint8_t key_pressed = 0;
+		key_pressed = scan_key();
+		if (key_pressed != 0) { // if a key press is detected
+			if (key_pressed == player2_com + 48) { // if right key is pressed
+				USART_Write(USART3, (uint8_t*) "$y", 2);
+				USART_Write(USART2, (uint8_t*) "CORRECT KEY! NICELY DONE!", 80);
+				player2_com = 250;
+				points++;
+			}
+			else { // if wrong key is pressed
+				USART_Write(USART3, (uint8_t*) "$n", 2);
+				USART_Write(USART2, (uint8_t*) "INCORRECT KEY! YOU IMBECILE!", 80);
+				player2_com = 250;
+				points--;
+			}
+		}
+		
+		// Check the button inputs
+		
+		if (/*red_btn_pressed*/) {
+			if (player1_com == 0) {
+				USART_Write(USART3, (uint8_t*) "$y", 2);
+				USART_Write(USART2, (uint8_t*) "CORRECT KEY! NICELY DONE!", 80);
+				player1_com = 250;
+				points++;
+			}
+			else {
+				USART_Write(USART3, (uint8_t*) "$n", 2);
+				USART_Write(USART2, (uint8_t*) "INCORRECT KEY! YOU IMBECILE!", 80);
+				player1_com = 250;
+				points--;
+			}
+		}
+		if (/*blue_btn_pressed*/) {
+			if (player1_com == 1) {
+				USART_Write(USART3, (uint8_t*) "$y", 2);
+				USART_Write(USART2, (uint8_t*) "CORRECT KEY! NICELY DONE!", 80);
+				player1_com = 250;
+				points++;
+			}
+			else {
+				USART_Write(USART3, (uint8_t*) "$n", 2);
+				USART_Write(USART2, (uint8_t*) "INCORRECT KEY! YOU IMBECILE!", 80);
+				player1_com = 250;
+				points--;
+			}
+		}
+		if (/*green_btn_pressed*/) {
+			if (player1_com == 2) {
+				USART_Write(USART3, (uint8_t*) "$y", 2);
+				USART_Write(USART2, (uint8_t*) "CORRECT KEY! NICELY DONE!", 80);
+				player1_com = 250;
+				points++;
+			}
+			else {
+				USART_Write(USART3, (uint8_t*) "$n", 2);
+				USART_Write(USART2, (uint8_t*) "INCORRECT KEY! YOU IMBECILE!", 80);
+				player1_com = 250;
+				points--;
+			}
+		}
+		if (/*yellow_btn_pressed*/) {
+			if (player1_com == 3) {
+				USART_Write(USART3, (uint8_t*) "$y", 2);
+				USART_Write(USART2, (uint8_t*) "CORRECT KEY! NICELY DONE!", 80);
+				player1_com = 250;
+				points++;
+			}
+			else {
+				USART_Write(USART3, (uint8_t*) "$n", 2);
+				USART_Write(USART2, (uint8_t*) "INCORRECT KEY! YOU IMBECILE!", 80);
+				player1_com = 250;
+				points--;
+			}
+		}
+		if (/*black_btn_pressed*/) {
+			if (player1_com == 4) {
+				USART_Write(USART3, (uint8_t*) "$y", 2);
+				USART_Write(USART2, (uint8_t*) "CORRECT KEY! NICELY DONE!", 80);
+				player1_com = 250;
+				points++;
+			}
+			else {
+				USART_Write(USART3, (uint8_t*) "$n", 2);
+				USART_Write(USART2, (uint8_t*) "INCORRECT KEY! YOU IMBECILE!", 80);
+				player1_com = 250;
+				points--;
+			}
+		}
+	} // while breakout loop
 }
 
-
-// READ 27.3 Random Number Genrateor RNG
-
-/* PSEUDOCODE FOR MASTER
-
-Randomly pick two tasks, one in task[0] and one in task[1]
-Send task[] to the slave module
-Send task[0] to COM (slave will send task[1] to COM)
-Wait for ok[] to come back or the timer to run out
-If ok[0] or ok[1] is 'n':
-	Give a task-appropriate penalty
-	Update either one or both tasks
-If ok[0] is 'y':
-	Give a task-appropriate reward
-	Update task[0] to a new random task
-	Send task[new_task, '\0'] to slave module
-If ok[1] is 'y'
-	Give a task-appropriate reward
-	Update task[1] to a new random task
-	Send task['\0', new_task] to slave module
-
-
-*/
-
-/* PSEUDOCODE FOR SLAVE
-Begin
-	Loop forever:
-		Scan keypad once
-		If key pressed:
-			Send back the character of the pressed key
-		If switch flipped
-			Save the state of the switch
-			Send back 'a'
-		If photoresistor 1 input goes low
-			Send back 'b'
-		If green button input goes low
-			Send back 'c'
-		If red button input goes low
-			Send back 'd'
-		If yellow button input goes low
-			Send back 'e'
-		If blue button input goes low
-			Send back 'f'
-		If black button 1 input goes low
-			Send back 'g'
-		If black button 2 input goes low
-			Send back 'h'
-		If tilt switch input goes low
-			Send back 'i'
-		If photoresistor 2 input goes low
-			Send back 'j'
-		If infrared sensor input goes high
-			Send back 'k'
-		If potentiometer input goes toggle
-			Save the state of potentiometer input
-			Send back 'l'
-	Endloop
-End	
-*/
-
-/* TASK LIST
-PB0-9
-Key 0
-Key 1
-Key 2
-Key 3
-Key 4
-Key 5
-Key 6
-Key 7
-Key 8
-Key 9
-Key A (10)
-Key B (11)
-Key C (12)
-Key D (13)
-Key # (14)
-Key * (15)
-a: Switch (16)
-b: Photoresistor 1 (17)
-PC0-9
-c: Green button (18)
-d: Red button (19)
-e: Yellow button (20)
-f: Blue button (21)
-g: Black button 1 (22)
-h: Black button 2 (23)
-i: Tilt switch (24)
-j: Photoresistor 2 (25)
-k: Infrared wand ??? (26)
-l: Potentiometer (27)
-
-*/
+void end_game() {
+	USART_Clear(USART2);
+	uint8_t buffer[2] = {0};
+	if (points > 200) {
+		buffer[0] = 200;
+		buffer[1] = 200 - points;
+	}
+	// break points into digits
+	uint8_t pointage[3] = {'e', 'e', 'e'};
+	pointage[0] = points / 100 + 48;
+	pointage[1] = (points - (pointage[0] * 100)) / 10 + 48;
+	pointage[2] = points % 10 + 48;
+	
+	USART_Write(USART2, (uint8_t*) "CONGARTULATIONS\r\n", 80);
+	USART_Write(USART2, (uint8_t*) "YOUR SCORE IS\r\n", 80);
+	USART_Write(USART2, pointage, 3);
+	USART_Write(USART2, (uint8_t*) "POINTS!\r\n\r\n", 80);
+	USART_Write(USART2, (uint8_t*) "RESET SLAVE THEN MASTER TO REPLAY\r\n", 80);
+	while (1);
+}

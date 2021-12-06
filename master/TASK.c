@@ -2,34 +2,43 @@
 #include "TASK.h"
 #include "TIM.h"
 #include "USART.h"
-static uint8_t* player1[16] = {
-	"Press the 0 key",
-	"Press the 1 key",
-	"Press the 2 key",
-	"Press the 3 key",
-	"Press the 4 key",
-	"Press the 5 key",
-	"Press the 6 key",
-	"Press the 7 key",
-	"Press the 8 key",
-	"Press the 9 key",
-	"Press the A key",
-	"Press the B key",
-	"Press the C key",
-	"Press the D key",
-	"Press the # key",
-	"Press the * key",
+
+// Player 1 has the buttons
+static uint8_t* player1[16] = { 
+	"Press the red button", // 0
+	"Press the blue button", // 1
+	"Press the green button", // 2
+	"Press the yellow button", // 3
+	"Press the black button" // 4
 };
 
+// Player 2 has the keypad
+
+// Task Master Function
 void taskMaster(void){
-	uint8_t task1 = get_rand(15);
-	uint8_t task2 = get_rand(15);
+	uint8_t task1 = (uint8_t) get_rand(4);
+	uint8_t task2 = (uint8_t) get_rand(15);
 	
-	uint8_t buffer[2]; //= {48 + task1, 48 + task2}; // convert random nuymbers to tasks and storre them, in buffer
+	uint8_t buffer[2]; // store random tasks in buffer
+	buffer[0] = task1;
+	buffer[1] = task2;
 	
-	usart_delay();
-	USART_Write(USART3, (uint8_t*) "$0", 2); // Send over the two instructions to scan
-	USART_Read(USART3, buffer, 2);
+	// give the slave time to start reading
+	for (int i = 0; i < 5; i++) {
+		usart_delay();
+	}
+	
+	if (get_timer() == 0) {
+		end_game();
+	}
+	
+	USART_Write(USART3, buffer, 2); // Send over the two instructions to scan
+	
+	USART_Clear(USART2);
+	USART_Write(USART2, player1[task1], 80); // print player 1 instructions
+	
+	USART_Read(USART3, buffer, 2); // Wait for a response from the slave
+	
 	if (buffer[0] != '$'){
 		if(buffer[0] == 'y'){
 			wind(10);
@@ -48,7 +57,26 @@ void taskMaster(void){
 	}
 }
 
-// READ 27.3 Random Number Genrateor RNG
+void end_game(void) {
+	USART_Clear(USART2);
+	uint8_t buffer[2] = {0};
+	USART_Write(USART3, (uint8_t*) "XX", 2);
+	USART_Read(USART3, buffer, 2);
+	
+	uint8_t pts = buffer[0] + buffer[1];
+	// break points into digits
+	uint8_t pointage[3] = {'e', 'e', 'e'};
+	pointage[0] = pts / 100 + 48;
+	pointage[1] = (pts - (pointage[0] * 100)) / 10 + 48;
+	pointage[2] = pts % 10 + 48;
+	
+	USART_Write(USART2, (uint8_t*) "CONGARTULATIONS\r\n", 80);
+	USART_Write(USART2, (uint8_t*) "YOUR SCORE IS\r\n", 80);
+	USART_Write(USART2, pointage, 3);
+	USART_Write(USART2, (uint8_t*) "POINTS!\r\n\r\n", 80);
+	USART_Write(USART2, (uint8_t*) "RESET SLAVE THEN MASTER TO REPLAY\r\n", 80);
+	while (1);
+}
 
 /* PSEUDOCODE FOR MASTER
 
@@ -105,38 +133,4 @@ Begin
 			Send back 'l'
 	Endloop
 End	
-*/
-
-/* TASK LIST
-PB0-9
-Key 0
-Key 1
-Key 2
-Key 3
-Key 4
-Key 5
-Key 6
-Key 7
-Key 8
-Key 9
-Key A (10)
-Key B (11)
-Key C (12)
-Key D (13)
-Key # (14)
-Key * (15)
-a: Switch (16)
-b: Photoresistor 1 (17)
-PC0-9
-c: Green button (18)
-d: Red button (19)
-e: Yellow button (20)
-f: Blue button (21)
-g: Black button 1 (22)
-h: Black button 2 (23)
-i: Tilt switch (24)
-j: Photoresistor 2 (25)
-k: Infrared wand ??? (26)
-l: Potentiometer (27)
-
 */
