@@ -5,19 +5,19 @@
 
 // Player 1 has the buttons
 static uint8_t* player1[16] = { 
-	"Press the red button", // 0
-	"Press the blue button", // 1
-	"Press the green button", // 2
-	"Press the yellow button", // 3
-	"Press the black button" // 4
+	"Press the red button ", // 0
+	"Press the blue button ", // 1
+	"Press the green button ", // 2
+	"Press the yellow button ", // 3
+	"Press the black button " // 4
 };
 
 // Player 2 has the keypad
 
 // Task Master Function
 void taskMaster(void){
-	uint8_t task1 = (uint8_t) get_rand(4);
-	uint8_t task2 = (uint8_t) get_rand(15);
+	uint8_t task1 = 0; //(uint8_t) get_rand(4);
+	uint8_t task2 = 0; //(uint8_t) get_rand(15);
 	
 	uint8_t buffer[2]; // store random tasks in buffer
 	buffer[0] = task1;
@@ -28,11 +28,8 @@ void taskMaster(void){
 		usart_delay();
 	}
 	
-	if (get_timer() == 0) {
-		end_game();
-	}
-	
 	USART_Write(USART3, buffer, 2); // Send over the two instructions to scan
+	USART_Write(USART2, (uint8_t*) "SENT THE BUFFER OVER ", 80);
 	
 	USART_Clear(USART2);
 	USART_Write(USART2, player1[task1], 80); // print player 1 instructions

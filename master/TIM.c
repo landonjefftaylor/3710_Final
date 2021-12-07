@@ -1,4 +1,5 @@
 #include "TIM.h"
+#include "TASK.h"
 #include "stm32l476xx.h"
 
 /*volatile unsigned int time;
@@ -6,6 +7,7 @@ void Set_Time_Zero(void) {
 	time = 0;
 }*/
 
+unsigned int gameCanO;
 unsigned int timer;
 unsigned int state;
 unsigned int step;
@@ -34,6 +36,7 @@ void Timer_Init(void) {
 	timer = 0;
 	step = 0;
 	rand = 0;
+	gameCanO = 0;
 	
 	//Set_Time_Zero();
 	
@@ -44,7 +47,7 @@ void Timer_Init(void) {
 	RCC->AHB2ENR |= RCC_AHB2ENR_GPIOBEN; //enable clock
 	RCC->AHB2ENR |= RCC_AHB2ENR_GPIOCEN; //enable clock
 	
-	unsigned int ticks = 58600; // 400k is to 0.1 as 58600 is to 1/68.26
+	unsigned int ticks = 586000; // 400k is to 0.1 as 58600 is to 1/68.26
 	// The distance was 40ms, we want it to be 100
 	
 	SysTick->CTRL = 0;
@@ -65,6 +68,7 @@ void SysTick_Handler(void) {
 	// drive the motor
 	rand++;
 	if (timer) {
+		gameCanO = 1;
 		switch (step) {
 			case 7: 
 				GPIOB->ODR &= 0xFFFFFFF1; //A
@@ -102,8 +106,8 @@ void SysTick_Handler(void) {
 		step++;
 		if (step == 8) step = 0;
 		timer--;
-		//timer--;
-		//return;
+	}else if(gameCanO){
+		end_game();
 	}
 }
 
@@ -135,7 +139,7 @@ void wind_delay(void) { // debounce and delay
 }
 
 void wind(unsigned int secs) {
-	unsigned int ticks = 68 * (secs);
+	volatile unsigned int ticks = 68 * (secs);
 	// drive the motor
 	while (ticks) {
 		GPIOB->ODR &= 0xFFFFFFF1; //A

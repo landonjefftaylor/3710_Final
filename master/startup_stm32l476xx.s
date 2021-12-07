@@ -253,7 +253,7 @@ Reset_Handler    PROC
 				 
 ;******************** Added by Dr. Zhu *****************************************************
 				 ; Copy the RW Data from Flash to RAM 
-8				 LDR	r0,	=|Image$$ER_IROM1$$RO$$Limit|
+18				 LDR	r0,	=|Image$$ER_IROM1$$RO$$Limit|
 				 LDR	r1,	=|Image$$RW_IRAM1$$RW$$Base|
 				 LDR	r3,	=|Image$$RW_IRAM1$$ZI$$Base|
 Copy_RW			 CMP	r1,	r3
