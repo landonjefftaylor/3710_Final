@@ -100,4 +100,10 @@ void key_init(void) {
 	GPIOB->ODR |= 0xF0;
 	// set the GPIOC->MODER 0 1 2 3 as inputs
 	GPIOC->MODER &= 0xFFFFFF00;
+	
+	// set PB0-3 as inputs
+	GPIOB->MODER &= 0xFFFFFF00;
+	
+	// set PB9 as input
+	GPIOB->MODER &= 0xFFF3FFFF;
 }

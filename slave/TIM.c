@@ -53,8 +53,8 @@ void Timer_Init(void) {
 	SysTick->VAL = 0;
 	SysTick->CTRL |= 0x00000007;
 	
-	GPIOB->MODER &= 0xFFFFFF55; //motor
-	GPIOB->MODER |= 0x00000055;
+	//GPIOB->MODER &= 0xFFFFFF55; //motor
+	//GPIOB->MODER |= 0x00000055;
 	
 	//GPIOC->MODER &= 0xFFFFFCFF; // buzzer on C4
 	//GPIOC->MODER |= 0x00000100;
@@ -64,7 +64,7 @@ void Timer_Init(void) {
 void SysTick_Handler(void) {
 	// drive the motor
 	rand++;
-	if (timer) {
+	/*if (timer) {
 		switch (step) {
 			case 7: 
 				GPIOB->ODR &= 0xFFFFFFF1; //A
@@ -104,7 +104,7 @@ void SysTick_Handler(void) {
 		timer--;
 		//timer--;
 		//return;
-	}
+	}*/
 }
 
 void buzz_delay(volatile unsigned int t) { // debounce and delay
@@ -137,7 +137,7 @@ void wind_delay(void) { // debounce and delay
 void wind(unsigned int secs) {
 	unsigned int ticks = 68 * (secs);
 	// drive the motor
-	while (ticks) {
+	/*while (ticks) {
 		GPIOB->ODR &= 0xFFFFFFF1; //A
 		GPIOB->ODR |= 0x00000001; //A
 		ticks--;
@@ -243,7 +243,7 @@ void wind(unsigned int secs) {
 				ticks--;
 				wind_delay();
 				break;
-		}*/
-	}
+		}
+	}*/
 }
 

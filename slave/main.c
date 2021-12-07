@@ -21,6 +21,7 @@ int main(void){
 	USART_Read(USART3, buffer, 2); // Read II
 	if (buffer[0] != 'I' || buffer[1] != 'I') {
 		USART_Write(USART2, (uint8_t*) "THERE WAS AN ERROR WITH II. RESTART SLAVE, THEN RESTART MASTER", 100);
+		USART_Write(USART2, buffer, 2);
 		return 1;
 	}
 	usart_delay();
@@ -30,6 +31,7 @@ int main(void){
 	USART_Write(USART2, (uint8_t*) "WELCOME TO SPACE THINGY\r\n", 80);
 	USART_Write(USART2, (uint8_t*) "***********************\r\n", 80);
 	USART_Write(USART2, (uint8_t*) "PLAYER 1 CHOOSES A MODE\r\n", 80);
+	USART_Write(USART2, (uint8_t*) "YOU ARE PLAYER 2 ======)\r\n", 80);
 	
 	USART_Read(USART3, buffer, 2); // get game id, throw away for now
 	//USART_Write(USART2, buffer, 2);
@@ -40,6 +42,7 @@ int main(void){
 		USART_Write(USART2, (uint8_t*) "THERE WAS AN ERROR WITH IG. RESTART SLAVE, THEN RESTART MASTER", 100);
 		return 1;
 	}
+	USART_Clear(USART2);
 	
 	while (1) taskSlave();
 	
@@ -54,5 +57,4 @@ int main(void){
 	while(1);
 	*/
 }
-
 
