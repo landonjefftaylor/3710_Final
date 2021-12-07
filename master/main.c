@@ -11,9 +11,9 @@ int main(void){
 	uint8_t buffer[2]; // BUFFER
 	uint8_t game_id[1]; // LEVEL NUMBER
 	
-	buzz((double)440.0f,10);
-	buzz((double)330.0f,10);
-	buzz((double)220.0f,10);
+	buzz((double)220.0f,1);
+	buzz((double)330.0f,1);
+	buzz((double)440.0f,1);
 	
 	// Handshake with slave
 	usart_delay();
@@ -35,6 +35,7 @@ int main(void){
 	USART_Write(USART2, (uint8_t*) "ENTER YOUR GAME NUMBER:\r\n\n", 80);
 	
 	USART_Read(USART2, game_id, 1); // read in level number
+	USART_Write(USART2, (uint8_t*) "PROCESSING...\r\n", 80);
 	
 	buffer[1] = game_id[0]; // Send game select signal, 'I_' where _ is the level number
 	USART_Write(USART3, buffer, 2);
@@ -46,12 +47,11 @@ int main(void){
 	USART_Read(USART2, buffer, 1); // 
 	USART_Clear(USART2);
 	USART_Write(USART3, (uint8_t*) "IG", 2);
+	usart_delay();
 	
 	set_timer(40);
 	 
 	while (1) taskMaster();
-	
-	while(1);
 }
 
 
