@@ -44,6 +44,9 @@ int main(void){
 	}
 	USART_Clear(USART2);
 	
+	// second handshake
+	USART_Write(USART3, (uint8_t*) "IG", 2);
+	
 	while (1) taskSlave();
 	
 	while (1);
