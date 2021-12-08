@@ -16,23 +16,17 @@ static uint8_t* player1[16] = {
 
 // Task Master Function
 void taskMaster(void){
-	uint8_t task1 = 0; //(uint8_t) get_rand(4);
-	uint8_t task2 = 0; //(uint8_t) get_rand(15);
+	uint8_t task1 = 0 + 48; //(uint8_t) get_rand(4);
+	uint8_t task2 = 0 + 48; //(uint8_t) get_rand(15);
 	
 	uint8_t buffer[2]; // store random tasks in buffer
 	buffer[0] = task1;
 	buffer[1] = task2;
 	
-	// give the slave time to start reading
-	for (int i = 0; i < 5; i++) {
-		usart_delay();
-	}
-	
 	USART_Write(USART3, buffer, 2); // Send over the two instructions to scan
-	USART_Write(USART2, (uint8_t*) "SENT THE BUFFER OVER ", 80);
 	
-	USART_Clear(USART2);
-	USART_Write(USART2, player1[task1], 80); // print player 1 instructions
+	//USART_Clear(USART2);
+	USART_Write(USART2, player1[task1 - 48], 80); // print player 1 instructions
 	
 	USART_Read(USART3, buffer, 2); // Wait for a response from the slave
 	
@@ -55,24 +49,31 @@ void taskMaster(void){
 }
 
 void end_game(void) {
-	USART_Clear(USART2);
+	/*uint8_t pointage[3] = {'e', 'e', 'e'};
 	uint8_t buffer[2] = {0};
-	USART_Write(USART3, (uint8_t*) "XX", 2);
-	USART_Read(USART3, buffer, 2);
+	USART_Clear(USART2);
 	
-	uint8_t pts = buffer[0] + buffer[1];
-	// break points into digits
-	uint8_t pointage[3] = {'e', 'e', 'e'};
-	pointage[0] = pts / 100 + 48;
-	pointage[1] = (pts - (pointage[0] * 100)) / 10 + 48;
-	pointage[2] = pts % 10 + 48;
+	USART_Write(USART2, (uint8_t*) "TIME'S UP! PRESS BLACK BUTTON TO SEE SCORE.\r\n", 80);
+	USART_Read(USART3, buffer, 2);*/
+	USART_Clear(USART2);
+	USART_Write(USART2, (uint8_t*) "TIME'S UP! PRESS BLACK BUTTON TO SEE SCORE DISPLAYED ON PLAYER 2 SCREEN\r\n", 100);
+	
+	while(1){
+		USART_Write(USART3, (uint8_t*) "XX", 2);
+		usart_delay();
+	}
+	/*
+	USART_Write(USART3, (uint8_t*) "XX", 2);
+	
+	USART_Read(USART3, pointage, 3);
+	USART_Write(USART2, (uint8_t*) "\n\n\n", 3);
 	
 	USART_Write(USART2, (uint8_t*) "CONGARTULATIONS\r\n", 80);
 	USART_Write(USART2, (uint8_t*) "YOUR SCORE IS\r\n", 80);
 	USART_Write(USART2, pointage, 3);
-	USART_Write(USART2, (uint8_t*) "POINTS!\r\n\r\n", 80);
+	USART_Write(USART2, (uint8_t*) " POINTS!\r\n\r\n", 80);
 	USART_Write(USART2, (uint8_t*) "RESET SLAVE THEN MASTER TO REPLAY\r\n", 80);
-	while (1);
+	while (1);*/
 }
 
 /* PSEUDOCODE FOR MASTER

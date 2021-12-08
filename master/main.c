@@ -4,6 +4,8 @@
 #include "TIM.h"
 #include "TASK.h"
 
+#define GAME_TIME 5
+
 int main(void){
 	USART2_Init(); // USB
 	USART3_Init(); // SLAVE
@@ -40,17 +42,22 @@ int main(void){
 	buffer[1] = game_id[0]; // Send game select signal, 'I_' where _ is the level number
 	USART_Write(USART3, buffer, 2);
 	
-	wind(40); // Wind output timer
+	wind(GAME_TIME); // Wind output timer
 	
 	USART_Clear(USART2); // Prompt level begin
 	USART_Write(USART2, (uint8_t*) "PRESS ANY KEY TO COMMENCE MISSION.\r\n", 80);
 	USART_Read(USART2, buffer, 1); // 
 	USART_Clear(USART2);
-	USART_Write(USART3, (uint8_t*) "IG", 2);
-	usart_delay();
 	
-	set_timer(40);
-	 
+	// handshake again with slave
+	USART_Write(USART3, (uint8_t*) "IG", 2);
+	USART_Read(USART3, buffer, 2);
+	if (buffer[0] != 'I' || buffer[1] != 'G') {
+		USART_Write(USART2, (uint8_t*) "THERE WAS AN ERROR WITH IG. RESTART SLAVE, THEN RESTART MASTER", 100);
+		return 1;
+	}
+	
+	set_timer(GAME_TIME); 
 	while (1) taskMaster();
 }
 
