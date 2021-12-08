@@ -6,7 +6,7 @@
 
 // Player 1 has the buttons
 // Each button is pulled up with a 2.2k resistor
-static uint8_t* player1[16] = { 
+static uint8_t* player1[5] = { 
 	"Press the red button", // 0
 	"Press the blue button", // 1
 	"Press the green button", // 2
@@ -56,7 +56,7 @@ void taskSlave(void) {
 	//USART_Write(USART2, buffer, 2); // confirm the command
 	
 	if (buffer[0] == 'X') {
-		USART_Write(USART2, (uint8_t*) "I AM HERE\r\n", 80);
+		USART_Write(USART2, (uint8_t*) "ENDGAME\r\n", 80);
 		end_game();
 	}
 	
