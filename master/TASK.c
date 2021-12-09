@@ -48,8 +48,8 @@ static uint8_t* player1[16] = {
 
 void setGame(int x){
 	gm = x;
-	p1Task = (uint8_t) get_rand(4) + 48;
-	p2Task = (uint8_t) get_rand(15) + 48;
+	p1Task = (uint8_t) get_rand(5) + 48;
+	p2Task = (uint8_t) get_rand(16) + 48;
 }
 
 void taskMaster(void){
@@ -76,6 +76,8 @@ void taskMaster(void){
 			score++;
 		} else {
 			USART_Write(USART2, (uint8_t*) " PILOT 1, INCORRECT TASK.\r\n", 80);
+			buzz((double)311.13,4);
+			buzz((double)207.65,4);
 			p1Task = (uint8_t) get_rand(4) + 48;
 			p2Task = (uint8_t) get_rand(15) + 48;
 		}
@@ -87,6 +89,8 @@ void taskMaster(void){
 			score++;
 		} else {
 			USART_Write(USART2, (uint8_t*) " PILOT 2, INCORRECT TASK.\r\n", 80);
+			buzz((double)392,4);
+			buzz((double)261.63,4);
 			p1Task = (uint8_t) get_rand(4) + 48;
 			p2Task = (uint8_t) get_rand(15) + 48;
 		}
