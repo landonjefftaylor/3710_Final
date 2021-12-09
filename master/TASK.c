@@ -112,6 +112,35 @@ void end_game(void) {
 	USART_Write(USART2, (uint8_t*) "YOUR SCORE IS\r\n", 80);
 	USART_Write(USART2, pointage, 3);
 	USART_Write(USART2, (uint8_t*) " POINTS!\r\n\r\n", 80);
+	
+	buzz((double)311.13,2);
+	buzz((double)415.3,2);
+	buzz((double)523.25,2);
+	buzz((double)622.25,2);
+	buzz((double)830.61,2);
+	buzz((double)1046.5,2);
+	buzz((double)1244.51,6);
+	buzz((double)1046.5,6);
+	buzz((double)329.63,2);
+	buzz((double)415.3,2);
+	buzz((double)493.88,2);
+	buzz((double)659.25,2);
+	buzz((double)830.61,2);
+	buzz((double)987.77,2);
+	buzz((double)1318.51,6);
+	buzz((double)987.77,6);
+	buzz((double)369.99,2);
+	buzz((double)466.16,2);
+	buzz((double)554.37,2);
+	buzz((double)739.99,2);
+	buzz((double)932.33,2);
+	buzz((double)1108.73,2);
+	buzz((double)1479.98,6);
+	buzz((double)1479.98,2);
+	buzz((double)1479.98,2);
+	buzz((double)1479.98,2);
+	buzz((double)1661.22,12);
+	
 	USART_Write(USART2, (uint8_t*) "RESET SLAVE THEN MASTER TO REPLAY\r\n", 80);
 	while (1);
 }

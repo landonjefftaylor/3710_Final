@@ -4,7 +4,7 @@
 #include "TIM.h"
 #include "TASK.h"
 
-#define GAME_TIME 20
+#define GAME_TIME 60
 
 int main(void){
 	USART2_Init(); // USB
@@ -15,9 +15,9 @@ int main(void){
 	uint8_t game_id[1]; // LEVEL NUMBER
 	
 	
-	buzz((double)220.0f,1);
-	buzz((double)330.0f,1);
-	buzz((double)440.0f,1);
+	buzz((double)220.0f,2);
+	buzz((double)330.0f,2);
+	buzz((double)440.0f,2);
 	
 	// Handshake with slave
 	usart_delay();

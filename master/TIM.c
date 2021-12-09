@@ -116,7 +116,7 @@ void buzz_delay(volatile unsigned int t) { // debounce and delay
 // tsec is number of tenths of seconds
 void buzz(volatile double hz, volatile unsigned int tsec) {
 	volatile double del = ((double)4.0f / hz) * 160000;
-	volatile unsigned int t = (160000 * tsec) / (volatile unsigned int) del;
+	volatile unsigned int t = (80000 * tsec) / (volatile unsigned int) del;
 	while (t != 0) {
 		GPIOC->ODR &= 0xFFFFFFEF;
 		buzz_delay((volatile unsigned int) del);
