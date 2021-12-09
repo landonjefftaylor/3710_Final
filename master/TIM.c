@@ -2,11 +2,6 @@
 #include "TASK.h"
 #include "stm32l476xx.h"
 
-/*volatile unsigned int time;
-void Set_Time_Zero(void) {
-	time = 0;
-}*/
-
 unsigned int gameCanO;
 unsigned int timer;
 unsigned int state;

@@ -4,14 +4,16 @@
 #include "TIM.h"
 #include "TASK.h"
 
-#define GAME_TIME 5
+#define GAME_TIME 20
 
 int main(void){
 	USART2_Init(); // USB
 	USART3_Init(); // SLAVE
 	Timer_Init();
+	
 	uint8_t buffer[2]; // BUFFER
 	uint8_t game_id[1]; // LEVEL NUMBER
+	
 	
 	buzz((double)220.0f,1);
 	buzz((double)330.0f,1);
@@ -34,11 +36,12 @@ int main(void){
 	USART_Clear(USART2); // Print welcome screen
 	USART_Write(USART2, (uint8_t*) "WELCOME TO SPACE THINGY\r\n", 80);
 	USART_Write(USART2, (uint8_t*) "***********************\r\n", 80);
-	USART_Write(USART2, (uint8_t*) "ENTER YOUR GAME NUMBER:\r\n\n", 80);
+	USART_Write(USART2, (uint8_t*) "ENTER YOUR GAME NUMBER(0-9):\r\n\n", 80);
 	
 	USART_Read(USART2, game_id, 1); // read in level number
-	USART_Write(USART2, (uint8_t*) "PROCESSING...\r\n", 80);
+	USART_Write(USART2, (uint8_t*) "PROCESSING...\r\n", 80); // Tell the user we're winding
 	
+	setGame((int) game_id[0] - 48);
 	buffer[1] = game_id[0]; // Send game select signal, 'I_' where _ is the level number
 	USART_Write(USART3, buffer, 2);
 	
