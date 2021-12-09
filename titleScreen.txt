@@ -1,22 +1,43 @@
-                                       _,'/
-                                  _.-''._:
-                          ,-:`-.-'    .:.|
-                         ;-.''       .::.|
-          _..------.._  / (:.       .:::.|
-       ,'.   .. . .  .`/  : :.     .::::.|
-     ,'. .    .  .   ./    \\ ::. .::::::.|
-   ,'. .  .    .   . /      `.,,::::::::.;\\
-  /  .            . /       ,',';_::::::,:_:
- / . .  .   .      /      ,',','::`--'':;._;
-: .             . /     ,',',':::::::_:'_,'
-|..  .   .   .   /    ,',','::::::_:'_,'
-|.              /,-. /,',':::::_:'_,'
-| ..    .    . /) /-:/,'::::_:',-'
-: . .     .   // / ,'):::_:',' ;
- \\ .   .     // /,' /,-.','  ./
-  \\ . .  `::./,// ,'' ,'   . /
-   `. .   . `;;;,/_.'' . . ,'
-    ,`. .   :;;' `:.  .  ,'
-   /   `-._,'  ..  ` _.-'
-  (     _,'``------''   Aggies to the Moon
-   `--''               Enter Gamemode (0-9)
+USART_Write(USART2, (uint8_t*) "                                       _,'/ \r\n", 80);
+USART_Write(USART2, (uint8_t*) "                                  _.-''._:  \r\n", 80);
+USART_Write(USART2, (uint8_t*) "                          ,-:`-.-'    .:.|  \r\n", 80);
+USART_Write(USART2, (uint8_t*) "                         ;-.''       .::.|  \r\n", 80);
+USART_Write(USART2, (uint8_t*) "          _..------.._  / (:.       .:::.|  \r\n", 80);
+USART_Write(USART2, (uint8_t*) "       ,'.   .. . .  .`/  : :.     .::::.|  \r\n", 80);
+USART_Write(USART2, (uint8_t*) "     ,'. .    .  .   ./    \\ ::. .::::::.| \r\n", 80);
+USART_Write(USART2, (uint8_t*) "   ,'. .  .    .   . /      `.,,::::::::.;\\\r\n", 80);
+USART_Write(USART2, (uint8_t*) "  /  .            . /       ,',';_::::::,:_:\r\n", 80);
+USART_Write(USART2, (uint8_t*) " / . .  .   .      /      ,',','::`--'':;._;\r\n", 80);
+USART_Write(USART2, (uint8_t*) ": .             . /     ,',',':::::::_:'_,' \r\n", 80);
+USART_Write(USART2, (uint8_t*) "|..  .   .   .   /    ,',','::::::_:'_,'    \r\n", 80);
+USART_Write(USART2, (uint8_t*) "|.              /,-. /,',':::::_:'_,'       \r\n", 80);
+USART_Write(USART2, (uint8_t*) "| ..    .    . /) /-:/,'::::_:',-'          \r\n", 80);
+USART_Write(USART2, (uint8_t*) ": . .     .   // / ,'):::_:',' ;            \r\n", 80);
+USART_Write(USART2, (uint8_t*) " \\ .   .     // /,' /,-.','  ./            \r\n", 80);
+USART_Write(USART2, (uint8_t*) "  \\ . .  `::./,// ,'' ,'   . /             \r\n", 80);
+USART_Write(USART2, (uint8_t*) "   `. .   . `;;;,/_.'' . . ,'               \r\n", 80);
+USART_Write(USART2, (uint8_t*) "    ,`. .   :;;' `:.  .  ,'                 \r\n", 80);
+USART_Write(USART2, (uint8_t*) "   /   `-._,'  ..  ` _.-'                   \r\n", 80);
+USART_Write(USART2, (uint8_t*) "  (     _,'``------''   Aggies to the Moon  \r\n", 80);
+USART_Write(USART2, (uint8_t*) "   `--''               Enter Gamemode (0-9) \r\n", 80);
+
+
+
+
+USART_Write(USART2, (uint8_t*) "You are a space tourist on your way to the moon,\r\n", 80);
+USART_Write(USART2, (uint8_t*) "when your pilot suddenly collapses.\r\n", 80);
+USART_Write(USART2, (uint8_t*) "You have to fly the rocket to safety \r\n", 80);
+USART_Write(USART2, (uint8_t*) "by working together to follow the computer’s commands.\r\n", 80);
+USART_Write(USART2, (uint8_t*) "\r\n", 80);
+USART_Write(USART2, (uint8_t*) "When the ship hit a small asteroid, its flight information became scrambled.\r\n", 80);
+USART_Write(USART2, (uint8_t*) "The previous captain made you a note of the\r\n", 80);
+USART_Write(USART2, (uint8_t*) "computer’s garbled names for every rocket booster.\r\n", 80);
+USART_Write(USART2, (uint8_t*) "Each screen will display a different command,\r\n", 80);
+USART_Write(USART2, (uint8_t*) "so you’ll have to work quickly to follow orders.\r\n", 80);
+USART_Write(USART2, (uint8_t*) "\r\n", 80);
+USART_Write(USART2, (uint8_t*) "There is a dial on your dashboard that shows\r\n", 80);
+USART_Write(USART2, (uint8_t*) "how close you are to your destination.\r\n", 80);
+USART_Write(USART2, (uint8_t*) "\r\n", 80);
+USART_Write(USART2, (uint8_t*) "Good luck, and enjoy your flight to the moon.\r\n", 80);
+USART_Write(USART2, (uint8_t*) "\r\n", 80);
+USART_Write(USART2, (uint8_t*) "Press any key to start the mission.\r\n", 80);
