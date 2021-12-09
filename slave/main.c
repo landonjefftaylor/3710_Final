@@ -28,10 +28,28 @@ int main(void){
 	USART_Write(USART3, (uint8_t*) "II", 2);
 	
 	// Welcome screen for player 2
-	USART_Write(USART2, (uint8_t*) "WELCOME TO SPACE THINGY\r\n", 80);
-	USART_Write(USART2, (uint8_t*) "***********************\r\n", 80);
-	USART_Write(USART2, (uint8_t*) "PLAYER 1 CHOOSES A MODE\r\n", 80);
-	USART_Write(USART2, (uint8_t*) "YOU ARE PLAYER 2 ======)\r\n", 80);
+	USART_Write(USART2, (uint8_t*) "                                       _,'/ \r\n", 80);
+	USART_Write(USART2, (uint8_t*) "                                  _.-''._:  \r\n", 80);
+	USART_Write(USART2, (uint8_t*) "                          ,-:`-.-'    .:.|  \r\n", 80);
+	USART_Write(USART2, (uint8_t*) "                         ;-.''       .::.|  \r\n", 80);
+	USART_Write(USART2, (uint8_t*) "          _..------.._  / (:.       .:::.|  \r\n", 80);
+	USART_Write(USART2, (uint8_t*) "       ,'.   .. . .  .`/  : :.     .::::.|  \r\n", 80);
+	USART_Write(USART2, (uint8_t*) "     ,'. .    .  .   ./    \\ ::. .::::::.| \r\n", 80);
+	USART_Write(USART2, (uint8_t*) "   ,'. .  .    .   . /      `.,,::::::::.;\\\r\n", 80);
+	USART_Write(USART2, (uint8_t*) "  /  .            . /       ,',';_::::::,:_:\r\n", 80);
+	USART_Write(USART2, (uint8_t*) " / . .  .   .      /      ,',','::`--'':;._;\r\n", 80);
+	USART_Write(USART2, (uint8_t*) ": .             . /     ,',',':::::::_:'_,' \r\n", 80);
+	USART_Write(USART2, (uint8_t*) "|..  .   .   .   /    ,',','::::::_:'_,'    \r\n", 80);
+	USART_Write(USART2, (uint8_t*) "|.              /,-. /,',':::::_:'_,'       \r\n", 80);
+	USART_Write(USART2, (uint8_t*) "| ..    .    . /) /-:/,'::::_:',-'          \r\n", 80);
+	USART_Write(USART2, (uint8_t*) ": . .     .   // / ,'):::_:',' ;            \r\n", 80);
+	USART_Write(USART2, (uint8_t*) " \\ .   .     // /,' /,-.','  ./            \r\n", 80);
+	USART_Write(USART2, (uint8_t*) "  \\ . .  `::./,// ,'' ,'   . /             \r\n", 80);
+	USART_Write(USART2, (uint8_t*) "   `. .   . `;;;,/_.'' . . ,'               \r\n", 80);
+	USART_Write(USART2, (uint8_t*) "    ,`. .   :;;' `:.  .  ,'                 \r\n", 80);
+	USART_Write(USART2, (uint8_t*) "   /   `-._,'  ..  ` _.-'                   \r\n", 80);
+	USART_Write(USART2, (uint8_t*) "  (     _,'``------''   Aggies to the Moon  \r\n", 80);
+	USART_Write(USART2, (uint8_t*) "   `--''                 You are Player 2   \r\n", 80);
 	
 	USART_Read(USART3, buffer, 2); // get game id, throw away for now
 	set_mode(buffer[1] - 48);

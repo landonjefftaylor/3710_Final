@@ -117,13 +117,15 @@ void taskSlave(void) {
 		if (key_pressed != 0) { // if a key press is detected
 			if (key_pressed == player2_com + 48) { // if right key is pressed
 				USART_Write(USART3, (uint8_t*) "$y", 2);
-				USART_Write(USART2, (uint8_t*) "CORRECT KEY! NICELY DONE!\r\n", 80);
+				USART_Write(USART2, (uint8_t*) "CORRECT, PILOT 2!\r\n", 80);
 				player2_com = 250;
+				return;
 			}
 			else { // if wrong key is pressed
 				USART_Write(USART3, (uint8_t*) "$n", 2);
-				USART_Write(USART2, (uint8_t*) "INCORRECT KEY! YOU IMBECILE!\r\n", 80);
+				USART_Write(USART2, (uint8_t*) "PILOT 2, INCORRECT TASK.\r\n", 80);
 				player2_com = 250;
+				return;
 			}
 		}
 		
@@ -133,55 +135,75 @@ void taskSlave(void) {
 			while ((GPIOB->IDR | 0xFFFFFFFE) == 0xFFFFFFFE);
 			if (player1_com == 0) {
 				USART_Write(USART3, (uint8_t*) "y$", 2);
+				USART_Write(USART2, (uint8_t*) "CORRECT, PILOT 1!\r\n", 80);
 				player1_com = 250;
+				return;
 			}
 			else {
 				USART_Write(USART3, (uint8_t*) "n$", 2);
+				USART_Write(USART2, (uint8_t*) "PILOT 1, INCORRECT TASK.\r\n", 80);
 				player1_com = 250;
+				return;
 			}
 		}
 		if ((GPIOB->IDR | 0xFFFFFFF7) == 0xFFFFFFF7) { // blue btn is PB3
 			while ((GPIOB->IDR | 0xFFFFFFF7) == 0xFFFFFFF7);
 			if (player1_com == 1) {
 				USART_Write(USART3, (uint8_t*) "y$", 2);
+				USART_Write(USART2, (uint8_t*) "CORRECT, PILOT 1!\r\n", 80);
 				player1_com = 250;
+				return;
 			}
 			else {
 				USART_Write(USART3, (uint8_t*) "n$", 2);
+				USART_Write(USART2, (uint8_t*) "PILOT 1, INCORRECT TASK.\r\n", 80);
 				player1_com = 250;
+				return;
 			}
 		}
 		if ((GPIOB->IDR | 0xFFFFFFFB) == 0xFFFFFFFB) { // green btn is PB2
 			while ((GPIOB->IDR | 0xFFFFFFFB) == 0xFFFFFFFB);
 			if (player1_com == 2) {
 				USART_Write(USART3, (uint8_t*) "y$", 2);
+				USART_Write(USART2, (uint8_t*) "CORRECT, PILOT 1!\r\n", 80);
 				player1_com = 250;
+				return;
 			}
 			else {
 				USART_Write(USART3, (uint8_t*) "n$", 2);
+				USART_Write(USART2, (uint8_t*) "PILOT 1, INCORRECT TASK.\r\n", 80);
 				player1_com = 250;
+				return;
 			}
 		}
 		if ((GPIOB->IDR | 0xFFFFFFFD) == 0xFFFFFFFD) { // yellow btn is PB1
 			while ((GPIOB->IDR | 0xFFFFFFFD) == 0xFFFFFFFD);
 			if (player1_com == 3) {
 				USART_Write(USART3, (uint8_t*) "y$", 2);
+				USART_Write(USART2, (uint8_t*) "CORRECT, PILOT 1!\r\n", 80);
 				player1_com = 250;
+				return;
 			}
 			else {
 				USART_Write(USART3, (uint8_t*) "n$", 2);
+				USART_Write(USART2, (uint8_t*) "PILOT 1, INCORRECT TASK.\r\n", 80);
 				player1_com = 250;
+				return;
 			}
 		}
 		if ((GPIOB->IDR | 0xFFFFFDFF) == 0xFFFFFDFF) { // black is PB9
 			while ((GPIOB->IDR | 0xFFFFFDFF) == 0xFFFFFDFF);
 			if (player1_com == 4) {
 				USART_Write(USART3, (uint8_t*) "y$", 2);
+				USART_Write(USART2, (uint8_t*) "CORRECT, PILOT 1!\r\n", 80);
 				player1_com = 250;
+				return;
 			}
 			else {
 				USART_Write(USART3, (uint8_t*) "n$", 2);
+				USART_Write(USART2, (uint8_t*) "PILOT 1, INCORRECT TASK.\r\n", 80);
 				player1_com = 250;
+				return;
 			}
 		}
 	} // while breakout loop

@@ -2,10 +2,10 @@
 #include "KEY.h"
 
 // Array of buttons
-unsigned char keys[4][4] = { {'1', '2', '3', 'A'},
-														 {'4', '5', '6', 'B'},
-														 {'7', '8', '9', 'C'},
-														 {'*', '0', '#', 'D'}
+unsigned char keys[4][4] = { {'1', '2', '3', 58},
+														 {'4', '5', '6', 59},
+														 {'7', '8', '9', 60},
+														 {63, '0', 62, 61}
 														};
 
 // Values to check against rows
