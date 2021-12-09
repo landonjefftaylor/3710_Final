@@ -4,6 +4,33 @@
 #include "USART.h"
 #include "KEY.h"
 
+static uint8_t* player1[10][5] = {
+	{"Activate the Tilayhia!", "Stabilize the Zoebeet!", "Toggle the Awepebiypi!", "Propel the Oxeeh!", "Flip the Qooxey!"},
+	{"Initialize the Elaumaa!", "Push the Ivomoyye!", "Toggle the Uluvuavyi!", "Trigger the Yvoqudiyak!", "Toggle the Izykiihy!"},
+	{"Press the Eliziyq!", "Initialize the Woodiyj!", "Press the Zosesuy!", "Initialize the Egore!", "Turn on the Asilauxy!"},
+	{"Push the Odidacy!", "Propel the Vutiyikuiy!", "Push the Eruama!", "Flip the Acynekua!", "Toggle the Aqoik!"},
+	{"Push the Duura!", "Stabilize the Nupeyywi!", "Activate the Ejyylugais!", "Push the Akooreja!", "Mobilize the Yqatif!"},
+	{"Toggle the Cuefiqoufo!", "Press the Pyfiayubal!", "Toggle the Yvyju!", "Push the Ofanupo!", "Energize the Ojiegyja!"},
+	{"Trigger the Edodoyy!", "Mobilize the Woygey!", "Activate the Ycytefoge!", "Start the Haxaot!", "Press the Capas!"},
+	{"Energize the Igywuakex!", "Turn on the Ubeihe!", "Turn on the Amuty!", "Mobilize the Ojeelyisu!", "Toggle the Fegac!"},
+	{"Compress the Ofiedeici!", "Compress the Yimuapie!", "Activate the Hyeqiu!", "Toggle the Wyuciarieh!", "Initialize the Ugiikuiq!"},
+	{"Propel the Raisazip!", "Turn on the Teysasye!", "Turn on the Yecizaucof!", "Push the Ygyrypapea!", "Compress the Ipecuu!"}
+};
+static uint8_t* player2[10][16] = {
+	{"Mobilize the Adaohiqyca!", "Activate the Laybiqe!", "Turn on the Wohit!", "Energize the Uhacyl!", "Stabilize the Huleluaho!", "Initialize the Nupeyywi!", "Energize the Moosuyypa!", "Toggle the Lotietinob!", "Stabilize the Ycahiw!", "Start the Ovoaz!", "Trigger the Xefet!", "Stabilize the Oduajij!", "Flip the Saeyypeeh!", "Start the Fiyeraa!", "Initialize the Wydyvoi!", "Press the Ilyep!"},
+	{"Initialize the Negyewow!", "Activate the Ykaetuy!", "Propel the Ahiypa!", "Trigger the Asioquk!", "Press the Ahejiajyef!", "Flip the Idijym!", "Compress the Dilufy!", "Propel the Yjysuywafy!", "Compress the Sydopeosou!", "Initialize the Wuelol!", "Start the Ifeaguaz!", "Compress the Iloehed!", "Propel the Duryiteo!", "Energize the Hydaipuo!", "Trigger the Udipu!", "Propel the Omeumiday!"},
+	{"Trigger the Izaobu!", "Compress the Nuafon!", "Trigger the Uyujo!", "Energize the Uhacyl!", "Stabilize the Yreehoyki!", "Compress the Heyxagije!", "Compress the Zyogaticu!", "Flip the Pexoynyda!", "Propel the Odiqiweky!", "Trigger the Yxiyhuaz!", "Mobilize the Deohypy!", "Toggle the Uzufuroan!", "Press the Areyvaur!", "Toggle the Boaqauz!", "Energize the Yuzapy!", "Compress the Eforuema!"},
+	{"Propel the Etamoh!", "Stabilize the Zavuzayre!", "Press the Asioquk!", "Toggle the Ykosax!", "Press the Quibeacay!", "Initialize the Uyixan!", "Toggle the Ohyiqaaqa!", "Toggle the Owayxumaqo!", "Mobilize the Adyota!", "Trigger the Pezyuq!", "Press the Suyloruak!", "Press the Demei!", "Compress the Gireloy!", "Compress the Ageayik!", "Initialize the Obucouh!", "Turn on the Enaihoije!"},
+	{"Compress the Zoukeesaz!", "Stabilize the Aryugifyu!", "Push the Soami!", "Propel the Uguwoi!", "Mobilize the Obyji!", "Stabilize the Unoge!", "Compress the Ipogacaba!", "Flip the Qouheunuis!", "Start the Gaefee!", "Initialize the Atuyseucik!", "Trigger the Ezipa!", "Stabilize the Qiyhy!", "Flip the Utoad!", "Press the Ovaaf!", "Turn on the Umouhum!", "Push the Fyafeapyi!"},
+	{"Toggle the Tyujidorel!", "Compress the Obiyorioly!", "Stabilize the Ovuvy!", "Push the Ofawev!", "Initialize the Wohit!", "Compress the Byihonoh!", "Trigger the Uxuyureod!", "Initialize the Ukoitual!", "Activate the Yufowo!", "Toggle the Veoseahui!", "Mobilize the Ypoudeyki!", "Trigger the Yeniywoaw!", "Initialize the Puojovea!", "Flip the Ziexy!", "Propel the Gigadiif!", "Energize the Taeyadukaj!"},
+	{"Press the Taizecyzay!", "Compress the Famolym!", "Trigger the Eheefosep!", "Trigger the Ukuzamiok!", "Push the Oxomahec!", "Initialize the Baeyeyubaw!", "Compress the Agoxaze!", "Stabilize the Ubeihe!", "Stabilize the Ipiifiuje!", "Push the Utoytakola!", "Mobilize the Ifiogeboz!", "Compress the Sezagyykiy!", "Start the Yroypuakoo!", "Turn on the Quibeacay!", "Trigger the Dyudah!", "Toggle the Fekuseb!"},
+	{"Start the Toinajenuj!", "Energize the Upeno!", "Start the Hyzyomopy!", "Activate the Viojegen!", "Activate the Tucuyquhi!", "Flip the Nupeyywi!", "Initialize the Isaeqaonyo!", "Mobilize the Ezooky!", "Compress the Jyziaqoyuk!", "Turn on the Tioye!", "Propel the Yevao!", "Trigger the Opiet!", "Activate the Oxeeh!", "Flip the Vomogex!", "Propel the Pyocomug!", "Initialize the Wemexuwio!"},
+	{"Mobilize the Ahoyyupio!", "Flip the Yzounin!", "Turn on the Qaomiuvux!", "Press the Pabeycuge!", "Activate the Faulo!", "Turn on the Cazufi!", "Initialize the Lytaybo!", "Propel the Ewule!", "Mobilize the Luduigawy!", "Propel the Caveacaepe!", "Flip the Rayxea!", "Mobilize the Ycivuyyyz!", "Push the Ryoqeikuc!", "Start the Zayqobiali!", "Initialize the Adymoseum!", "Trigger the Wuquo!"},
+	{"Trigger the Bougeo!", "Start the Yezuom!", "Mobilize the Unoatu!", "Stabilize the Ehomawag!", "Toggle the Yyyogys!", "Stabilize the Bevaa!", "Start the Myoryuly!", "Start the Uhinowyawa!", "Start the Iruroj!", "Energize the Yqoywedoa!", "Activate the Inoyvoiy!", "Mobilize the Evahauniy!", "Push the Opicuiji!", "Trigger the Sezagyykiy!", "Stabilize the Ehiedenaow!", "Start the Xoulyzaty!"}
+};
+
+
+/*
 // Player 1 has the buttons
 // Each button is pulled up with a 2.2k resistor
 static uint8_t* player1[5] = { 
@@ -22,7 +49,7 @@ static uint8_t* player1[5] = {
 	"Press the ", // 12
 	"Press the ", // 13 
 	"Press the ", // 14
-	"Press the "  // 15*/
+	"Press the "  // 15
 };
 
 // Player 2 has the keypad
@@ -44,16 +71,24 @@ static uint8_t* player2[16] = {
 	"Press the # key", // 14
 	"Press the * key"  // 15
 };
+*/
 
 static uint8_t player1_com = 0;
 static uint8_t player2_com = 0;
-static uint8_t points = 0;
+uint8_t gm = 0;
+
+void set_mode(uint8_t mode) {
+	gm = mode;
+}
 
 // Task Slave Function
 void taskSlave(void) {
 	uint8_t buffer[2] = {0};
+	//USART_Write(USART2, (uint8_t*) "TASKSLAVE READING ", 80);
 	USART_Read(USART3, buffer, 2);
+	//USART_Write(USART2, (uint8_t*) "TASKSLAVE GOT ", 80);
 	//USART_Write(USART2, buffer, 2); // confirm the command
+	//USART_Write(USART2, (uint8_t*) "\r\n", 80);
 	
 	if (buffer[0] == 'X') {
 		USART_Write(USART2, (uint8_t*) "ENDGAME\r\n", 80);
@@ -69,27 +104,25 @@ void taskSlave(void) {
 		player2_com = buffer[1] - 48;
 		
 		// write the command to the screen
-		USART_Clear(USART2);
-		USART_Write(USART2, buffer, 2);
-		USART_Write(USART2, player2[player2_com], 80);
+		//USART_Clear(USART2);
+
+		//USART_Write(USART2, buffer, 2);
+		USART_Write(USART2, player2[gm][player2_com], 80);
 	}
 	
 	while (player1_com < 250 && player2_com < 250) { // Loop until a player has done an input
-		
-		// Scan the keypad once
-		
+		// Scan the keypad once		
 		uint8_t key_pressed = 0;
 		key_pressed = scan_key();
 		if (key_pressed != 0) { // if a key press is detected
 			if (key_pressed == player2_com + 48) { // if right key is pressed
 				USART_Write(USART3, (uint8_t*) "$y", 2);
-				USART_Write(USART2, (uint8_t*) "CORRECT KEY! NICELY DONE!", 80);
+				USART_Write(USART2, (uint8_t*) "CORRECT KEY! NICELY DONE!\r\n", 80);
 				player2_com = 250;
-				points++;
 			}
 			else { // if wrong key is pressed
 				USART_Write(USART3, (uint8_t*) "$n", 2);
-				USART_Write(USART2, (uint8_t*) "INCORRECT KEY! YOU IMBECILE!", 80);
+				USART_Write(USART2, (uint8_t*) "INCORRECT KEY! YOU IMBECILE!\r\n", 80);
 				player2_com = 250;
 			}
 		}
@@ -101,7 +134,6 @@ void taskSlave(void) {
 			if (player1_com == 0) {
 				USART_Write(USART3, (uint8_t*) "y$", 2);
 				player1_com = 250;
-				points++;
 			}
 			else {
 				USART_Write(USART3, (uint8_t*) "n$", 2);
@@ -113,7 +145,6 @@ void taskSlave(void) {
 			if (player1_com == 1) {
 				USART_Write(USART3, (uint8_t*) "y$", 2);
 				player1_com = 250;
-				points++;
 			}
 			else {
 				USART_Write(USART3, (uint8_t*) "n$", 2);
@@ -125,7 +156,6 @@ void taskSlave(void) {
 			if (player1_com == 2) {
 				USART_Write(USART3, (uint8_t*) "y$", 2);
 				player1_com = 250;
-				points++;
 			}
 			else {
 				USART_Write(USART3, (uint8_t*) "n$", 2);
@@ -137,7 +167,6 @@ void taskSlave(void) {
 			if (player1_com == 3) {
 				USART_Write(USART3, (uint8_t*) "y$", 2);
 				player1_com = 250;
-				points++;
 			}
 			else {
 				USART_Write(USART3, (uint8_t*) "n$", 2);
@@ -149,7 +178,6 @@ void taskSlave(void) {
 			if (player1_com == 4) {
 				USART_Write(USART3, (uint8_t*) "y$", 2);
 				player1_com = 250;
-				points++;
 			}
 			else {
 				USART_Write(USART3, (uint8_t*) "n$", 2);
@@ -160,6 +188,7 @@ void taskSlave(void) {
 }
 
 void end_game(void) {
+	/*
 	USART_Clear(USART2);
 	uint8_t buffer[1] = {0};
 
@@ -183,5 +212,5 @@ void end_game(void) {
 	USART_Write(USART2, (uint8_t*) "POINTS!\r\n\r\n", 80);
 	USART_Write(USART2, (uint8_t*) "RESET SLAVE THEN MASTER TO REPLAY\r\n", 80);
 	
-	while (1);
+	while (1);*/
 }

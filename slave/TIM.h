@@ -3,17 +3,6 @@
 
 void Timer_Init(void);
 void SysTick_Handler(void);
-void Set_Time_Zero(void);
-
-void set_state(unsigned int s);
-void set_timer(unsigned int s);
-unsigned int get_timer(void);
-
 unsigned int get_rand(unsigned int wall);
 
-/*
-int state;
-int step;
-int timer;
-	*/
 #endif

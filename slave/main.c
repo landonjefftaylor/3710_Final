@@ -34,6 +34,7 @@ int main(void){
 	USART_Write(USART2, (uint8_t*) "YOU ARE PLAYER 2 ======)\r\n", 80);
 	
 	USART_Read(USART3, buffer, 2); // get game id, throw away for now
+	set_mode(buffer[1] - 48);
 	//USART_Write(USART2, buffer, 2);
 	
 	USART_Read(USART3, buffer, 2); // get IG confirmation
@@ -49,15 +50,5 @@ int main(void){
 	
 	while (1) taskSlave();
 	
-	while (1);
-	/*
-	buzz(261.63, 5);
-	buzz(293.66, 5);
-	buzz(329.63, 5);
-	buzz(349.23, 5);
-	buzz(392, 5);
-	
-	while(1);
-	*/
 }
 

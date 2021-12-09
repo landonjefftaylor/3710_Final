@@ -1,28 +1,7 @@
 #include "TIM.h"
 #include "stm32l476xx.h"
 
-/*volatile unsigned int time;
-void Set_Time_Zero(void) {
-	time = 0;
-}*/
-
-unsigned int timer;
-unsigned int state;
-unsigned int step;
-
 volatile unsigned int rand;
-
-void set_state(unsigned int s) {
-	state = s;
-}
-
-void set_timer(unsigned int s) {
-	timer = s * 68;
-}
-
-unsigned int get_timer(void) {
-	return timer;
-}
 
 unsigned int get_rand(unsigned int wall) {
 	return rand % wall;
@@ -30,12 +9,7 @@ unsigned int get_rand(unsigned int wall) {
 
 void Timer_Init(void) {
 	
-	state = 0;
-	timer = 0;
-	step = 0;
 	rand = 0;
-	
-	//Set_Time_Zero();
 	
 	// set the clock to HSI clock at 16 MHz
 	RCC->CR |= RCC_CR_HSION;
