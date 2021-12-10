@@ -107,7 +107,10 @@ void taskSlave(void) {
 		//USART_Clear(USART2);
 
 		//USART_Write(USART2, buffer, 2);
-		USART_Write(USART2, player2[gm][player2_com], 80);
+		
+		// Randomly write one of the things
+		if (get_rand(2)) USART_Write(USART2, player2[gm][player2_com], 80);
+		else USART_Write(USART2, player1[gm][player1_com], 80);
 	}
 	
 	while (player1_com < 250 && player2_com < 250) { // Loop until a player has done an input

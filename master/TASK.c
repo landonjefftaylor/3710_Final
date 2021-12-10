@@ -65,7 +65,10 @@ void taskMaster(void){
 	USART_Write(USART3, buffer, 2); // Send over the two instructions to scan
 	
 	//USART_Clear(USART2);
-	USART_Write(USART2, player1[gm][task1 - 48], 80); // print player 1 instructions
+  
+  // Randomly print a command
+  if (get_rand(2)) USART_Write(USART2, player1[gm][task1 - 48], 80); // print player 1 instructions
+  else USART_Write(USART2, player2[gm][task2 - 48], 80); // print player 2 instruction
 	
 	USART_Read(USART3, buffer, 2); // Wait for a response from the slave
 	
