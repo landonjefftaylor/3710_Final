@@ -2,3 +2,87 @@ Video Demo
 
 For our final project, we built a cooperative, task-completion game.
 The objective of the game is to complete tasks in a “level” before the time runs out using a variety of inputs.
+
+
+UART Speaking
+
+Connections via USART2 to USB
+  Displays messages on each player's screen
+  Reads after any prompts
+Connections via USART3 to each other
+
+Gameplay
+  Starts with a handshake protocol
+  Master tells the slave the game starts, slave confirms that it's ready
+  
+
+
+
+
+GAMEPLAY
+
+The premise of this game is to click as many correct buttons as possible before time runs out. Players have to work together to unscramble the name of each button as fast as possible.
+
+When the game begins, the players see a welcome screen. They choose a game mode zero through nine which indicates which set of garbled button names they will receive.
+
+They see an instruction screen and have time to memorize the names of their buttons, which are printed on index cards that go with the game. 
+
+Once they are ready, player 1 presses any key. The timer begins, and each user is shown a random task. 
+
+The task on each screen can correspond to either player's controls, so the players have to work together to decode each input's name. A correct input is rewarded with a point, and an incorrect input is penalized by randomizing both tasks, hiding their inputs for about one second, and playing a buzzing sound.
+
+Every time a user presses an input, they are shown whether that input was correct or not. A list of previously activated commands is shown on the screen to help users remember what each garbled command means.
+
+Once the time is out, buttons no longer cause any action. The score is printed on Player 1's screen, and a familiar jingle plays.
+ 
+ 
+
+UART
+
+Communication is achieved through a polling asynchronous UART interface. Each microcontroller is connected to a PC via a USB cable. That USB connection is used to print instructions to each player's screen, as well as to accept computer keyboard input.
+
+The two microcontrollers are connected to each other via another UART interface. Pins PC10 and PC11 are interconnected between the two microcontrollers. When combined with a code implementation, these two connections allow for asynchronous communication between the microcontrollers.
+
+
+UART 2
+The game begins with a handshake protocol. The master microcontroller (connected to Player 1 screen) sends a code to the slave microcontroller. If the slave receives the code with no errors, it sends a code back to master and the game begins.
+
+During gameplay, the master randomizes commands and sends them to the slave. The slave reads these commands, and each microcontroller selects one of the players' commands at random to display on the screen. The slave begins scanning inputs, and as soon as a key or a button is pressed then released, it validates the input. It sends the master a signal representing either a correct or incorrect input, and the master updates the score. The process repeats until time runs out.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4
+51
+4
+85
+122
+11
+11
+4
+50
+4
+
+Taken: 446 seconds
+Needs: 34 to 154 seconds
+
+
+
+
+
+
+
+Aggies to the Moon is a final project for ECE 3710 at Utah State University. Thank you for watching.
+
